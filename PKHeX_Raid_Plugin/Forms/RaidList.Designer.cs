@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             GB_Left = new System.Windows.Forms.GroupBox();
+            button2 = new System.Windows.Forms.Button();
             CHK_Watts = new System.Windows.Forms.CheckBox();
             CHK_Wishing = new System.Windows.Forms.CheckBox();
             L_Shiny = new System.Windows.Forms.Label();
@@ -57,17 +58,20 @@
             TB_HP_IV1 = new System.Windows.Forms.TextBox();
             L_DenSeed = new System.Windows.Forms.Label();
             CB_Den = new System.Windows.Forms.ComboBox();
-            GB_Right = new System.Windows.Forms.GroupBox();
+            splitContainer1 = new System.Windows.Forms.SplitContainer();
             DenMap = new System.Windows.Forms.PictureBox();
             GB_Left.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PB_PK1).BeginInit();
-            GB_Right.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DenMap).BeginInit();
             SuspendLayout();
             // 
             // GB_Left
             // 
-            GB_Left.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            GB_Left.Controls.Add(button2);
             GB_Left.Controls.Add(CHK_Watts);
             GB_Left.Controls.Add(CHK_Wishing);
             GB_Left.Controls.Add(L_Shiny);
@@ -96,14 +100,25 @@
             GB_Left.Controls.Add(TB_HP_IV1);
             GB_Left.Controls.Add(L_DenSeed);
             GB_Left.Controls.Add(CB_Den);
-            GB_Left.Location = new System.Drawing.Point(10, 12);
+            GB_Left.Dock = System.Windows.Forms.DockStyle.Fill;
+            GB_Left.Location = new System.Drawing.Point(2, 2);
             GB_Left.Margin = new System.Windows.Forms.Padding(2);
             GB_Left.Name = "GB_Left";
             GB_Left.Padding = new System.Windows.Forms.Padding(2);
-            GB_Left.Size = new System.Drawing.Size(265, 483);
+            GB_Left.Size = new System.Drawing.Size(236, 533);
             GB_Left.TabIndex = 0;
             GB_Left.TabStop = false;
             GB_Left.Text = "Den List";
+            // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(75, 466);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(75, 31);
+            button2.TabIndex = 27;
+            button2.Text = "Close";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += Button2_Click;
             // 
             // CHK_Watts
             // 
@@ -306,7 +321,7 @@
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(13, 447);
+            button1.Location = new System.Drawing.Point(10, 430);
             button1.Margin = new System.Windows.Forms.Padding(2);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(215, 31);
@@ -404,48 +419,66 @@
             CB_Den.TabIndex = 0;
             CB_Den.SelectedIndexChanged += ChangeDenIndex;
             // 
-            // GB_Right
+            // splitContainer1
             // 
-            GB_Right.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            GB_Right.Controls.Add(DenMap);
-            GB_Right.Location = new System.Drawing.Point(248, 12);
-            GB_Right.Margin = new System.Windows.Forms.Padding(2);
-            GB_Right.Name = "GB_Right";
-            GB_Right.Padding = new System.Windows.Forms.Padding(2);
-            GB_Right.Size = new System.Drawing.Size(205, 483);
-            GB_Right.TabIndex = 1;
-            GB_Right.TabStop = false;
-            GB_Right.Text = "Den Map";
+            splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            splitContainer1.Location = new System.Drawing.Point(2, 2);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(GB_Left);
+            splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(2);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(DenMap);
+            splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2);
+            splitContainer1.Size = new System.Drawing.Size(462, 537);
+            splitContainer1.SplitterDistance = 240;
+            splitContainer1.TabIndex = 2;
             // 
             // DenMap
             // 
             DenMap.BackgroundImage = Properties.Resources.map;
             DenMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             DenMap.Dock = System.Windows.Forms.DockStyle.Fill;
-            DenMap.Location = new System.Drawing.Point(2, 18);
+            DenMap.Location = new System.Drawing.Point(2, 2);
             DenMap.Margin = new System.Windows.Forms.Padding(2);
             DenMap.Name = "DenMap";
-            DenMap.Size = new System.Drawing.Size(201, 463);
+            DenMap.Size = new System.Drawing.Size(214, 533);
+            DenMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             DenMap.TabIndex = 0;
             DenMap.TabStop = false;
+            DenMap.BackgroundImageChanged += DenMap_BackgroundImageChanged;
             // 
             // RaidList
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(457, 508);
-            Controls.Add(GB_Right);
-            Controls.Add(GB_Left);
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(466, 541);
+            ControlBox = false;
+            Controls.Add(splitContainer1);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             Margin = new System.Windows.Forms.Padding(2);
+            MinimumSize = new System.Drawing.Size(0, 543);
             Name = "RaidList";
+            Padding = new System.Windows.Forms.Padding(2);
             ShowIcon = false;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "Raid List";
+            Load += RaidList_Load;
+            Resize += RaidList_Resize;
             GB_Left.ResumeLayout(false);
             GB_Left.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PB_PK1).EndInit();
-            GB_Right.ResumeLayout(false);
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)DenMap).EndInit();
             ResumeLayout(false);
 
@@ -477,12 +510,13 @@
         private System.Windows.Forms.Label L_Nature;
         private System.Windows.Forms.Label L_ShinyInFrames;
         private System.Windows.Forms.Label L_Location;
-        private System.Windows.Forms.GroupBox GB_Right;
-        private System.Windows.Forms.PictureBox DenMap;
         private System.Windows.Forms.Label L_Stars;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label L_Shiny;
         private System.Windows.Forms.CheckBox CHK_Wishing;
         private System.Windows.Forms.CheckBox CHK_Watts;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.PictureBox DenMap;
+        private System.Windows.Forms.Button button2;
     }
 }

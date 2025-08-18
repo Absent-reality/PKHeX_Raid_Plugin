@@ -1,10 +1,12 @@
-﻿using PKHeX.Core;
+﻿using FlatBuffers;
+using PKHeX.Core;
+using PKHeX_Raid_Plugin.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using PKHeX_Raid_Plugin.Properties;
 
 namespace PKHeX_Raid_Plugin
 {
@@ -66,7 +68,6 @@ namespace PKHeX_Raid_Plugin
             L_Location.Text = raidParameters.Location;
 
             if (raidParameters.X > 0 && raidParameters.Y > 0)
-                // DenMap.BackgroundImage = RaidUtil.GetNestMap(raidParameters);
                 UpdateBackground(raidParameters);
         }
 
@@ -102,26 +103,26 @@ namespace PKHeX_Raid_Plugin
             var pkm = _pkms[e.Index];
 
             if (raid.IsWishingPiece || pkm.ShinyType != 0)
-             itemFont = new(itemFont, FontStyle.Bold);
-               
-            if (raid.IsWishingPiece)
-             foreColor = Color.Purple;
-            else if (pkm.ShinyType != 0)   
-             foreColor = Color.Yellow;            
+                itemFont = new(itemFont, FontStyle.Bold);
 
-            e.DrawBackground();        
+            if (raid.IsWishingPiece)
+                foreColor = Color.Purple;
+            else if (pkm.ShinyType != 0)
+                foreColor = Color.Yellow;
+
+            e.DrawBackground();
             using Brush textBrush = new SolidBrush(foreColor);
 
-            e.Graphics.DrawString(itemText, itemFont, textBrush, e.Bounds);          
+            e.Graphics.DrawString(itemText, itemFont, textBrush, e.Bounds);
             e.DrawFocusRectangle();
         }
 
         private void UpdateBackground(RaidParameters selectedRaid)
-        {          
+        {
             List<RaidParameters> raids = [];
             Bitmap baseMap = Resources.map;
 
-            switch(selectedRaid.Index)
+            switch (selectedRaid.Index)
             {
                 case >= 190:
                     baseMap = Resources.map_ct;
@@ -142,17 +143,15 @@ namespace PKHeX_Raid_Plugin
             Pen redPen = new(Color.Red, 10);
             using var graphics = Graphics.FromImage(mapWithMarks);
 
-              if (selectedRaid.Index >= 100)
-              {               
-                  graphics.DrawArc(redPen, selectedRaid.X - 1, selectedRaid.Y - 1, 2, 2, 0, 360);
-                  mapWithMarks = CropAround(mapWithMarks, selectedRaid.X, selectedRaid.Y, 172, 402);
-              }
-              else
-              {            
+            if (selectedRaid.Index >= 190)
+            {
+                redPen = new(Color.Red, 20);
+                graphics.DrawArc(redPen, selectedRaid.X - 10, selectedRaid.Y - 10, 25, 25, 0, 360);
+            }
+            else
                 graphics.DrawArc(redPen, selectedRaid.X - 5, selectedRaid.Y - 5, 15, 15, 0, 360);
-              }
 
-                DenMap.BackgroundImage = mapWithMarks;
+            DisplayImage(mapWithMarks);
         }
 
         private Bitmap AllMapMarks(List<RaidParameters> raids, Bitmap map)
@@ -187,19 +186,64 @@ namespace PKHeX_Raid_Plugin
                 height);
         }
 
-        private static Bitmap CropAround(Bitmap source, int centerX, int centerY, int width, int height)
+        public void DisplayImage(Image img)
         {
-            int startX = Math.Max(0, Math.Min(source.Width - width, centerX - width / 2));
-            int startY = Math.Max(0, Math.Min(source.Height - height, centerY - height / 2));
-            Rectangle cropRect = new(startX, startY, width, height);
-            Bitmap target = new(width, height);
-
-            using (Graphics g = Graphics.FromImage(target))
-            {
-                g.DrawImage(source, new Rectangle(0, 0, width, height), cropRect, GraphicsUnit.Pixel);
-            }
-
-            return target;
+            if (img == null) return;
+            DenMap.BackgroundImage = img;
         }
+
+        private void DenMap_BackgroundImageChanged(object sender, EventArgs e)
+        {
+            if (DenMap.BackgroundImage == null) return;
+            UpdateFormSize(DenMap.BackgroundImage);
+        }
+
+        private void UpdateFormSize(Image img)
+        {
+            Size adjustedSize = Size.Empty;
+            int currentWidth = DenMap.Width;
+            int currentHeight = DenMap.Height;
+            var aspectRatio = (float)img.Width / (float)img.Height;
+            int newWidth = (int)((float)currentHeight * aspectRatio);
+            if (newWidth > currentWidth)
+                adjustedSize = new Size(this.Width + (newWidth - currentWidth), this.Height);
+            else if (newWidth < currentWidth)
+                adjustedSize = new Size(this.Width - (currentWidth - newWidth), this.Height);
+            if (adjustedSize != Size.Empty)
+                this.Size = adjustedSize;
+        }
+
+        private int _originalHeight;
+        private bool _isResizing = false;
+        private bool _isLoaded = false;
+
+        private void RaidList_Load(object sender, EventArgs e)
+        {
+            _isLoaded = true;
+            _originalHeight = this.Height;
+        }
+
+        private void RaidList_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal && !_isResizing && _isLoaded)
+            {
+                _isResizing = true;
+
+                this.BeginInvoke((MethodInvoker)(() =>
+                {
+                    this.SuspendLayout();
+
+                    this.Height = _originalHeight;
+
+                    if (DenMap.BackgroundImage != null)
+                        UpdateFormSize(DenMap.BackgroundImage);
+
+                    this.ResumeLayout();
+                    _isResizing = false;
+                }));
+            }
+        }
+
+        private void Button2_Click(object sender, EventArgs e) => this.Close();
     }
 }

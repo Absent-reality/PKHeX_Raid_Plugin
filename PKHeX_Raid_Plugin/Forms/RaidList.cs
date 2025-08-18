@@ -1,9 +1,7 @@
-﻿using FlatBuffers;
-using PKHeX.Core;
+﻿using PKHeX.Core;
 using PKHeX_Raid_Plugin.Properties;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;

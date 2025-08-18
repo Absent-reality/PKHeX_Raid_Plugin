@@ -105,7 +105,7 @@
             GB_Left.Margin = new System.Windows.Forms.Padding(2);
             GB_Left.Name = "GB_Left";
             GB_Left.Padding = new System.Windows.Forms.Padding(2);
-            GB_Left.Size = new System.Drawing.Size(236, 533);
+            GB_Left.Size = new System.Drawing.Size(236, 529);
             GB_Left.TabIndex = 0;
             GB_Left.TabStop = false;
             GB_Left.Text = "Den List";
@@ -435,7 +435,7 @@
             // 
             splitContainer1.Panel2.Controls.Add(DenMap);
             splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2);
-            splitContainer1.Size = new System.Drawing.Size(462, 537);
+            splitContainer1.Size = new System.Drawing.Size(458, 533);
             splitContainer1.SplitterDistance = 240;
             splitContainer1.TabIndex = 2;
             // 
@@ -447,7 +447,7 @@
             DenMap.Location = new System.Drawing.Point(2, 2);
             DenMap.Margin = new System.Windows.Forms.Padding(2);
             DenMap.Name = "DenMap";
-            DenMap.Size = new System.Drawing.Size(214, 533);
+            DenMap.Size = new System.Drawing.Size(210, 529);
             DenMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             DenMap.TabIndex = 0;
             DenMap.TabStop = false;
@@ -457,12 +457,11 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            AutoSize = true;
-            ClientSize = new System.Drawing.Size(466, 541);
-            ControlBox = false;
+            ClientSize = new System.Drawing.Size(462, 537);
             Controls.Add(splitContainer1);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Margin = new System.Windows.Forms.Padding(2);
+            MaximizeBox = false;
             MinimumSize = new System.Drawing.Size(0, 543);
             Name = "RaidList";
             Padding = new System.Windows.Forms.Padding(2);

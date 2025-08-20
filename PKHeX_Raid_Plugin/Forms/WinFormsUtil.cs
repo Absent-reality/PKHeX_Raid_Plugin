@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -51,5 +53,11 @@ namespace PKHeX_Raid_Plugin
             string msg = string.Join(Environment.NewLine + Environment.NewLine, lines);
             return MessageBox.Show(msg, "Prompt", btn, MessageBoxIcon.Asterisk);
         }
+
+        public static T? FirstFormOfType<T>()
+          where T : Form => FormsOfType<T>().FirstOrDefault();
+
+        public static IEnumerable<T> FormsOfType<T>()
+          where T : Form => Application.OpenForms.OfType<T>();
     }
 }

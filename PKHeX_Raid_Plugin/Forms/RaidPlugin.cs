@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using PKHeX.Core;
+using System;
 using System.Diagnostics;
-using PKHeX.Core;
+using System.Windows.Forms;
 
 namespace PKHeX_Raid_Plugin
 {
@@ -59,24 +59,37 @@ namespace PKHeX_Raid_Plugin
             if (game != GameVersion.SW && game != GameVersion.SH)
                 return;
             var savegame = (SAV8SWSH)sav;
-            var f = new RaidList(savegame.Blocks, game, savegame.Badges, savegame.TID16, savegame.SID16);
-            f.Show();
+
+            var form = WinFormsUtil.FirstFormOfType<RaidList>();
+            if (form == null)
+            {
+                form = new RaidList(savegame.Blocks, game, savegame.Badges, savegame.TID16, savegame.SID16);
+                form.Show();
+            }
+            else         
+                form.Focus();
         }
 
         private void LoadSeedFinder()
         {
             var sav = SaveFileEditor.SAV;
-            var sf = new SeedFinder((uint)sav.TID16, (uint)sav.SID16);
-            var pkm = PKMEditor.PreparePKM();
-            if (pkm is PK8 pk8 && pk8.DynamaxLevel != 0)
-                sf.LoadPKM(pk8);
-            sf.Show();
+            var sf = WinFormsUtil.FirstFormOfType<SeedFinder>();
+            if (sf == null)
+            {
+                sf = new SeedFinder((uint)sav.TID16, (uint)sav.SID16);
+                var pkm = PKMEditor.PreparePKM();
+                if (pkm is PK8 pk8 && pk8.DynamaxLevel != 0)
+                    sf.LoadPKM(pk8);
+                sf.Show();
+            }
+            else
+                sf.Focus();         
         }
 
         public void NotifySaveLoaded()
         {
             var sav = SaveFileEditor.SAV;
-            IsLoaded = sav is SAV8SWSH;
+            IsLoaded = sav is SAV8SWSH; 
         }
 
         public bool TryLoadFile(string filePath)
@@ -103,7 +116,7 @@ namespace PKHeX_Raid_Plugin
                 return (ToolStripMenuItem)search[0];
 
             var subMenu = CreateBaseGroupItem();
-            tools.DropDownItems.Insert(0, subMenu);
+            tools.DropDownItems.Add(subMenu);
             return subMenu;
         }
 

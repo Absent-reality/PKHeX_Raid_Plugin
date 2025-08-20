@@ -29,7 +29,13 @@
         private void InitializeComponent()
         {
             GB_Left = new System.Windows.Forms.GroupBox();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            label4 = new System.Windows.Forms.Label();
             button2 = new System.Windows.Forms.Button();
+            label3 = new System.Windows.Forms.Label();
+            tb_ip = new System.Windows.Forms.TextBox();
+            label2 = new System.Windows.Forms.Label();
+            tb_port = new System.Windows.Forms.TextBox();
             CHK_Watts = new System.Windows.Forms.CheckBox();
             CHK_Wishing = new System.Windows.Forms.CheckBox();
             L_Shiny = new System.Windows.Forms.Label();
@@ -61,6 +67,7 @@
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             DenMap = new System.Windows.Forms.PictureBox();
             GB_Left.SuspendLayout();
+            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PB_PK1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -71,7 +78,7 @@
             // 
             // GB_Left
             // 
-            GB_Left.Controls.Add(button2);
+            GB_Left.Controls.Add(groupBox1);
             GB_Left.Controls.Add(CHK_Watts);
             GB_Left.Controls.Add(CHK_Wishing);
             GB_Left.Controls.Add(L_Shiny);
@@ -105,20 +112,82 @@
             GB_Left.Margin = new System.Windows.Forms.Padding(2);
             GB_Left.Name = "GB_Left";
             GB_Left.Padding = new System.Windows.Forms.Padding(2);
-            GB_Left.Size = new System.Drawing.Size(236, 529);
+            GB_Left.Size = new System.Drawing.Size(270, 526);
             GB_Left.TabIndex = 0;
             GB_Left.TabStop = false;
             GB_Left.Text = "Den List";
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(button2);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(tb_ip);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(tb_port);
+            groupBox1.Location = new System.Drawing.Point(106, 340);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(150, 134);
+            groupBox1.TabIndex = 33;
+            groupBox1.TabStop = false;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
+            label4.Location = new System.Drawing.Point(47, 19);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(81, 15);
+            label4.TabIndex = 32;
+            label4.Text = "For CFW only:";
+            // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(127, 414);
+            button2.Location = new System.Drawing.Point(35, 99);
             button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(75, 31);
+            button2.Size = new System.Drawing.Size(67, 25);
             button2.TabIndex = 27;
             button2.Text = "Connect";
             button2.UseVisualStyleBackColor = true;
             button2.Click += Button2_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(4, 68);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(32, 15);
+            label3.TabIndex = 31;
+            label3.Text = "Port:";
+            // 
+            // tb_ip
+            // 
+            tb_ip.Location = new System.Drawing.Point(38, 37);
+            tb_ip.MaxLength = 20;
+            tb_ip.Name = "tb_ip";
+            tb_ip.PlaceholderText = "192.168.1.10";
+            tb_ip.Size = new System.Drawing.Size(100, 23);
+            tb_ip.TabIndex = 28;
+            tb_ip.TextChanged += tb_ip_TextChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            label2.Location = new System.Drawing.Point(16, 40);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(20, 15);
+            label2.TabIndex = 30;
+            label2.Text = "IP:";
+            // 
+            // tb_port
+            // 
+            tb_port.Location = new System.Drawing.Point(38, 65);
+            tb_port.Name = "tb_port";
+            tb_port.ReadOnly = true;
+            tb_port.Size = new System.Drawing.Size(46, 23);
+            tb_port.TabIndex = 29;
+            tb_port.Text = "6000";
             // 
             // CHK_Watts
             // 
@@ -321,7 +390,7 @@
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(10, 450);
+            button1.Location = new System.Drawing.Point(29, 486);
             button1.Margin = new System.Windows.Forms.Padding(2);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(215, 31);
@@ -435,8 +504,8 @@
             // 
             splitContainer1.Panel2.Controls.Add(DenMap);
             splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2);
-            splitContainer1.Size = new System.Drawing.Size(458, 533);
-            splitContainer1.SplitterDistance = 240;
+            splitContainer1.Size = new System.Drawing.Size(510, 530);
+            splitContainer1.SplitterDistance = 274;
             splitContainer1.TabIndex = 2;
             // 
             // DenMap
@@ -447,7 +516,7 @@
             DenMap.Location = new System.Drawing.Point(2, 2);
             DenMap.Margin = new System.Windows.Forms.Padding(2);
             DenMap.Name = "DenMap";
-            DenMap.Size = new System.Drawing.Size(210, 529);
+            DenMap.Size = new System.Drawing.Size(228, 526);
             DenMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             DenMap.TabIndex = 0;
             DenMap.TabStop = false;
@@ -457,7 +526,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(462, 537);
+            ClientSize = new System.Drawing.Size(514, 534);
             Controls.Add(splitContainer1);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Margin = new System.Windows.Forms.Padding(2);
@@ -472,6 +541,8 @@
             Resize += RaidList_Resize;
             GB_Left.ResumeLayout(false);
             GB_Left.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PB_PK1).EndInit();
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
@@ -517,5 +588,11 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PictureBox DenMap;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox tb_port;
+        private System.Windows.Forms.TextBox tb_ip;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

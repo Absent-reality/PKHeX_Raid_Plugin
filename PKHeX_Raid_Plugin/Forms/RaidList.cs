@@ -16,6 +16,8 @@ namespace PKHeX_Raid_Plugin
         private List<RaidParameters> _baseRaids = [];
         private List<RaidParameters> _ctRaids = [];
         private List<RaidParameters> _aotRaids = [];
+        private readonly int _port = 6000;
+        private int Ip = 0;
 
         public RaidList(SaveBlockAccessor8SWSH blocks, GameVersion game, int badges, int tid, int sid)
         {
@@ -243,5 +245,10 @@ namespace PKHeX_Raid_Plugin
         }
 
         private void Button2_Click(object sender, EventArgs e) => this.Close();
+
+        private void tb_ip_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

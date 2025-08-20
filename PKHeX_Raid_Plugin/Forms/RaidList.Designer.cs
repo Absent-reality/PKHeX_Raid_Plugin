@@ -112,11 +112,11 @@
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(75, 466);
+            button2.Location = new System.Drawing.Point(127, 414);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(75, 31);
             button2.TabIndex = 27;
-            button2.Text = "Close";
+            button2.Text = "Connect";
             button2.UseVisualStyleBackColor = true;
             button2.Click += Button2_Click;
             // 
@@ -321,7 +321,7 @@
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(10, 430);
+            button1.Location = new System.Drawing.Point(10, 450);
             button1.Margin = new System.Windows.Forms.Padding(2);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(215, 31);

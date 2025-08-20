@@ -15,16 +15,16 @@ namespace PKHeX_Raid_Plugin
         private static readonly int[] min_stars = { 0, 0, 0, 0, 1, 1, 2, 2, 2, 0 };
         private static readonly int[] max_stars = { 0, 1, 1, 2, 2, 2, 3, 3, 4, 4 };
 
-        private static readonly ComboboxItem genderless = new ComboboxItem("Genderless", 2);
-        private static readonly ComboboxItem female = new ComboboxItem("Female", 1);
-        private static readonly ComboboxItem male = new ComboboxItem("Male", 0);
-        private static readonly ComboboxItem any = new ComboboxItem("Any", -1);
+        private static readonly ComboboxItem genderless = new("Genderless", 2);
+        private static readonly ComboboxItem female = new ("Female", 1);
+        private static readonly ComboboxItem male = new ("Male", 0);
+        private static readonly ComboboxItem any = new ("Any", -1);
 
         private static readonly string[] genders = { "Male", "Female", "Genderless" };
         private static readonly string[] shinytype = { "No", "Star", "Square" };
-        private static readonly Dictionary<string, int> natureIdx = new Dictionary<string, int>();
+        private static readonly Dictionary<string, int> natureIdx = [];
 
-        private CancellationTokenSource cts = new CancellationTokenSource();
+        private CancellationTokenSource cts = new();
 
         public DenIVs(int idx, RaidManager raids)
         {
@@ -37,10 +37,12 @@ namespace PKHeX_Raid_Plugin
             natureBox.Items.Clear();
             natureBox.Items.Add("Any");
             natureBox.Items.AddRange(gameStrings.natures);
+
             for (int i = 0; i < gameStrings.natures.Length; i++)
             {
                 natureIdx[gameStrings.natures[i]] = i + 1;
             }
+
             natureBox.MaxDropDownItems = gameStrings.natures.Length;
             natureBox.DefaultValue = "Any";
             natureBox.DisplayMember = "Value";
@@ -66,7 +68,7 @@ namespace PKHeX_Raid_Plugin
                 var entries = Raids.GetAllTemplatesWithStarCount(raidParameters, 0);
                 foreach (var entry in entries)
                 {
-                    ComboboxItem item = new ComboboxItem($"{entry.MinRank + 1}\u2605 {s.Species[entry.Species]}", entry);
+                    ComboboxItem item = new ($"{entry.MinRank + 1}\u2605 {s.Species[entry.Species]}", entry);
                     speciesList.Items.Add(item);
                 }
             }
@@ -77,7 +79,7 @@ namespace PKHeX_Raid_Plugin
                     var entries = Raids.GetAllTemplatesWithStarCount(raidParameters, stars);
                     foreach (var entry in entries)
                     {
-                        ComboboxItem item = new ComboboxItem($"{stars + 1}\u2605 {s.Species[entry.Species]}", entry);
+                        ComboboxItem item = new ($"{stars + 1}\u2605 {s.Species[entry.Species]}", entry);
                         speciesList.Items.Add(item);
                     }
                 }
@@ -110,7 +112,7 @@ namespace PKHeX_Raid_Plugin
                 var row = CreateRaidRow(current_frame, res, s, current_seed);
                 rows.Add(row);
             }
-            raidContent.Rows.AddRange(rows.ToArray());
+            raidContent.Rows.AddRange([.. rows]);
             // Double buffering can make DGV slow in remote desktop
             if (!SystemInformation.TerminalServerSession)
                 raidContent.DoubleBuffered(true);

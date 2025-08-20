@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-
 using PKHeX.Core;
-using System.ComponentModel;
 
 namespace PKHeX_Raid_Plugin
 {

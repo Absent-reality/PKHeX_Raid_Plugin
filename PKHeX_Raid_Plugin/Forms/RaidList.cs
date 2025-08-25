@@ -1,9 +1,15 @@
-﻿using PKHeX.Core;
+﻿using Microsoft.Z3;
+using PKHeX.Core;
+using PKHeX_Raid_Plugin.Connections;
 using PKHeX_Raid_Plugin.Properties;
+using SysBot.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PKHeX_Raid_Plugin
@@ -16,18 +22,42 @@ namespace PKHeX_Raid_Plugin
         private List<RaidParameters> _baseRaids = [];
         private List<RaidParameters> _ctRaids = [];
         private List<RaidParameters> _aotRaids = [];
-        private readonly int _port = 6000;
-        private int Ip = 0;
+        private string Ip = "";
+        private int Port = 6000;
+        private bool _connected = false;
+        [DefaultValue(false)]
+        public bool Connected
+        {
+            get { return _connected; }
+            set
+            {
+                if (_connected != value)
+                {
+                    _connected = value;
+                    OnPropertyChange(value);
+                }
+            }
+        }
+        private readonly SAV8SWSH? _SAV = null!;
+        private SwitchProtocol _selectedProtocol = SwitchProtocol.WiFi;
+        public DeviceExecutor Executor = null!;
+        public bool IsConnected() => Connected;
 
-        public RaidList(SaveBlockAccessor8SWSH blocks, GameVersion game, int badges, int tid, int sid)
+        public RaidList(SAV8SWSH sav)
         {
             InitializeComponent();
             CB_Den.DrawMode = DrawMode.OwnerDrawFixed;
             CB_Den.DrawItem -= CB_Den_DrawItem;
-            CB_Den.DrawItem += CB_Den_DrawItem;
+            CB_Den.DrawItem += CB_Den_DrawItem;           
             IVs = [TB_HP_IV1, TB_ATK_IV1, TB_DEF_IV1, TB_SPA_IV1, TB_SPD_IV1, TB_SPE_IV1];
-            _raids = new RaidManager(blocks, game, badges, (uint)tid, (uint)sid);
+            _SAV = sav;
+            _raids = new RaidManager(sav.Blocks, sav.Version, sav.Badges, (uint)sav.TID16, (uint)sav.SID16);
             CB_Den.SelectedIndex = 0;
+            tb_ip.Text = Plugin_Settings.Default.address;
+            tb_port.Text = Plugin_Settings.Default.port.ToString();
+            protocolSwitch.State = Plugin_Settings.Default.protocol
+                ? SwitchControl.SwitchState.Right
+                : SwitchControl.SwitchState.Left;
             CenterToParent();
             GetAllDens();
             LoadDen(_raids[0]);
@@ -244,11 +274,129 @@ namespace PKHeX_Raid_Plugin
             }
         }
 
-        private void Button2_Click(object sender, EventArgs e) => this.Close();
+        private async void Connect_Clicked(object sender, EventArgs e) => await AttemptConnection();
 
-        private void tb_ip_TextChanged(object sender, EventArgs e)
+        private void Tb_port_TextChanged(object sender, EventArgs e)
         {
+            if (int.TryParse(tb_port.Text.Trim(), out int result))
+                Port = result;
+            else
+                return;
+        }
 
+        private void Tb_port_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow control keys (backspace, delete, etc.)
+            if (char.IsControl(e.KeyChar))
+            {
+                base.OnKeyPress(e);
+                return;
+            }
+
+            if (!char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            base.OnKeyPress(e);
+        }
+
+        private void Tb_ip_ValidIPChanged(object sender, ValidIPChangedEventArgs e)
+        {
+            Ip = e.ValidatedText ?? "";
+        }
+
+        private void Switch_Toggled(object sender, SwitchControl.ToggledEventArgs e)
+        {
+            var protocol = e.State switch
+            {
+                SwitchControl.SwitchState.Left => SwitchProtocol.WiFi,
+                SwitchControl.SwitchState.Right => SwitchProtocol.USB,
+                _ => throw new InvalidOperationException($"Unexpected state: {e.State}")
+            };
+            _selectedProtocol = protocol;
+            tb_port.Enabled = !e.IsLeft;
+        }
+
+        private async Task AttemptConnection()
+        {
+            var token = new CancellationToken();
+
+            try
+            {
+                var config = _selectedProtocol switch
+                {
+                    SwitchProtocol.USB => new SwitchConnectionConfig { Port = Port, Protocol = SwitchProtocol.USB },
+                    SwitchProtocol.WiFi => new SwitchConnectionConfig { IP = Ip, Port = Port, Protocol = SwitchProtocol.WiFi },
+                    _ => throw new ArgumentOutOfRangeException("NoProtocol"),
+                };
+                var state = new DeviceState
+                {
+                    Connection = config,
+                    InitialRoutine = RoutineType.ReadWrite,
+                };
+                Executor = new DeviceExecutor(state);
+                await Executor.RunAsync(token).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Disconnect();
+                MessageBox.Show($"{ex.Message}");
+                return;
+            }
+
+            Connected = true;
+            Plugin_Settings.Default.address = Ip;
+            Plugin_Settings.Default.port = Port;
+            Plugin_Settings.Default.protocol = _selectedProtocol switch
+            {
+                SwitchProtocol.USB => true,
+                _ => false,
+            };
+            Plugin_Settings.Default.Save();
+
+            // CurrentProgress = 0;
+            await Executor.Connect(token).ConfigureAwait(false);
+            // UpdateProgress(CurrentProgress++, MaxProgress);
+            var version = await Executor.ReadGame(token).ConfigureAwait(false);
+            //  UpdateProgress(CurrentProgress++, MaxProgress);
+            if(_SAV != null)
+            _SAV.Version = version;
+
+            Disconnect();
+        }
+
+        public void Disconnect()
+        {
+            try { Executor.Disconnect(); }
+            catch { }
+            Connected = false;
+        }
+
+        private void UpdateProgress(int currProgress, int maxProgress)
+        {
+            ProgressBar progressBar = new();
+
+            var value = (100 * currProgress) / maxProgress;
+            if (progressBar.InvokeRequired)
+                progressBar.Invoke(() => progressBar.Value = value);
+            else if (value > 100)
+                progressBar.Value = 100;
+            else
+                progressBar.Value = value;
+        }
+
+        private void OnPropertyChange(Object value)
+        {
+            if (value is bool connected)
+                Cnct_btn.Text = connected ? "Disconnect" : "Connect";
+        }
+
+        private void Log(string message)
+        {
+            if (Connected)
+                Executor.Log(message);
         }
     }
 }

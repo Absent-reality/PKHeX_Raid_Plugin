@@ -63,7 +63,7 @@ namespace PKHeX_Raid_Plugin
             var form = WinFormsUtil.FirstFormOfType<RaidList>();
             if (form == null)
             {
-                form = new RaidList(savegame.Blocks, game, savegame.Badges, savegame.TID16, savegame.SID16);
+                form = new RaidList(savegame);
                 form.Show();
             }
             else         

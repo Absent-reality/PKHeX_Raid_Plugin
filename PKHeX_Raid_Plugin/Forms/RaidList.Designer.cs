@@ -30,6 +30,7 @@
         {
             GB_Left = new System.Windows.Forms.GroupBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            progressBar = new System.Windows.Forms.ProgressBar();
             tb_ip = new IPTextBox();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
@@ -115,13 +116,14 @@
             GB_Left.Margin = new System.Windows.Forms.Padding(2);
             GB_Left.Name = "GB_Left";
             GB_Left.Padding = new System.Windows.Forms.Padding(2);
-            GB_Left.Size = new System.Drawing.Size(270, 555);
+            GB_Left.Size = new System.Drawing.Size(270, 572);
             GB_Left.TabIndex = 0;
             GB_Left.TabStop = false;
             GB_Left.Text = "Den List";
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(progressBar);
             groupBox1.Controls.Add(tb_ip);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(label5);
@@ -133,9 +135,17 @@
             groupBox1.Controls.Add(tb_port);
             groupBox1.Location = new System.Drawing.Point(106, 340);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(150, 164);
+            groupBox1.Size = new System.Drawing.Size(150, 172);
             groupBox1.TabIndex = 33;
             groupBox1.TabStop = false;
+            // 
+            // progressBar
+            // 
+            progressBar.Location = new System.Drawing.Point(16, 155);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new System.Drawing.Size(123, 10);
+            progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            progressBar.TabIndex = 38;
             // 
             // tb_ip
             // 
@@ -429,7 +439,7 @@
             // 
             // button1
             // 
-            button1.Location = new System.Drawing.Point(30, 509);
+            button1.Location = new System.Drawing.Point(30, 526);
             button1.Margin = new System.Windows.Forms.Padding(2);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(215, 31);
@@ -543,7 +553,7 @@
             // 
             splitContainer1.Panel2.Controls.Add(DenMap);
             splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(2);
-            splitContainer1.Size = new System.Drawing.Size(520, 559);
+            splitContainer1.Size = new System.Drawing.Size(529, 576);
             splitContainer1.SplitterDistance = 274;
             splitContainer1.TabIndex = 2;
             // 
@@ -555,7 +565,7 @@
             DenMap.Location = new System.Drawing.Point(2, 2);
             DenMap.Margin = new System.Windows.Forms.Padding(2);
             DenMap.Name = "DenMap";
-            DenMap.Size = new System.Drawing.Size(238, 555);
+            DenMap.Size = new System.Drawing.Size(247, 572);
             DenMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             DenMap.TabIndex = 0;
             DenMap.TabStop = false;
@@ -565,7 +575,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(524, 563);
+            ClientSize = new System.Drawing.Size(533, 580);
             Controls.Add(splitContainer1);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Margin = new System.Windows.Forms.Padding(2);
@@ -636,5 +646,6 @@
         private System.Windows.Forms.Label label5;
         private SwitchControl protocolSwitch;
         private IPTextBox tb_ip;
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }

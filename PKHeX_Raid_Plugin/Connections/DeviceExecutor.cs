@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -124,7 +126,17 @@ namespace PKHeX_Raid_Plugin.Connections
                 throw new Exception($"Game version is not supported. Expected version {VersionNumber}, and current game version is {version}.");
 
             return version;
+
         }
 
+        public async Task<byte[]> GetBytes(BlockDefinition blockDefinition, CancellationToken token)
+        {
+            var length = blockDefinition.Size;
+            var offset = blockDefinition.Offset;
+            byte[] data = [];
+            if (offset < uint.MaxValue)                
+              data = await SwitchConnection.ReadBytesAsync((uint)offset, length, token);              
+            return data;
+        }
     }
 }

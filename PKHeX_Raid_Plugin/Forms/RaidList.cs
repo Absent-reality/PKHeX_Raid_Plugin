@@ -1,4 +1,5 @@
 ﻿using Microsoft.Z3;
+using Newtonsoft.Json.Linq;
 using PKHeX.Core;
 using PKHeX_Raid_Plugin.Connections;
 using PKHeX_Raid_Plugin.Properties;
@@ -9,13 +10,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PKHeX_Raid_Plugin
 {
-    public partial class RaidList : Form
+    public partial class RaidList : Form, INotifyPropertyChanged
     {
         private RaidManager _raids;
         private readonly TextBox[] IVs;
@@ -25,42 +27,50 @@ namespace PKHeX_Raid_Plugin
         private List<RaidParameters> _aotRaids = [];
         private string Ip = "";
         private int Port = 6000;
-        private bool _connected = false;
-        private int _maxProgress = 0;
+        private int _maxProgress = 10;
         private int _currentProgress = 0;
+        private bool _connected = false;
+        private bool _isConnecting = false;
 
         [DefaultValue(false)]
         public bool Connected
         {
-            get { return _connected; }
+            get => _connected; 
             set
             {
                 if (_connected != value)
                 {
                     _connected = value;
-                    OnPropertyChange(value);
+                    OnPropertyChanged();
                 }
             }
         }
+
+        [DefaultValue(false)]
+        public bool IsConnecting
+        {
+            get => _isConnecting;
+            set
+            {
+                if (_isConnecting != value)
+                {
+                    _isConnecting = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private readonly SAV8SWSH _SAV = null!;
         private SwitchProtocol _selectedProtocol = SwitchProtocol.WiFi;
         public DeviceExecutor Executor = null!;
         public bool IsConnected() => Connected;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public RaidList(SAV8SWSH sav)
         {
             InitializeComponent();
-            CB_Den.DrawMode = DrawMode.OwnerDrawFixed;
-            CB_Den.DrawItem -= CB_Den_DrawItem;
-            CB_Den.DrawItem += CB_Den_DrawItem;           
             IVs = [TB_HP_IV1, TB_ATK_IV1, TB_DEF_IV1, TB_SPA_IV1, TB_SPD_IV1, TB_SPE_IV1];
             _SAV = sav;
-
-            tb_ip.Text = Plugin_Settings.Default.address;
-            tb_port.Text = Plugin_Settings.Default.port.ToString();
-            protocolSwitch.State = Plugin_Settings.Default.protocol
-                ? SwitchControl.SwitchState.Right
-                : SwitchControl.SwitchState.Left;
             CenterToParent();
             UpdateRaids(sav);
         }
@@ -261,6 +271,26 @@ namespace PKHeX_Raid_Plugin
         {
             _isLoaded = true;
             _originalHeight = this.Height;
+
+            CB_Den.DrawMode = DrawMode.OwnerDrawFixed;
+            CB_Den.DrawItem -= CB_Den_DrawItem;
+            CB_Den.DrawItem += CB_Den_DrawItem;
+
+            tb_ip.Text = Plugin_Settings.Default.address;
+            tb_port.Text = Plugin_Settings.Default.port.ToString();
+            protocolSwitch.State = Plugin_Settings.Default.protocol
+                ? SwitchControl.SwitchState.Right
+                : SwitchControl.SwitchState.Left;
+            InitializeBindings();
+        }
+
+        private void InitializeBindings()
+        {
+            btn_refresh.DataBindings.Add("Visible", this, "Connected");
+            var binding = new Binding("Enabled", this, "IsConnecting", true, DataSourceUpdateMode.OnPropertyChanged);
+            binding.Format += (s, e) => e.Value = !(bool?)e.Value;
+            binding.Parse += (s, e) => e.Value = !(bool?)e.Value;
+            Cnct_btn.DataBindings.Add(binding);
         }
 
         private void RaidList_Resize(object sender, EventArgs e)
@@ -325,7 +355,7 @@ namespace PKHeX_Raid_Plugin
 
         private void Switch_Toggled(object sender, SwitchControl.ToggledEventArgs e)
         {
-            (var protocol, Port )= e.State switch
+            (var protocol, Port) = e.State switch
             {
                 SwitchControl.SwitchState.Left => (SwitchProtocol.WiFi, 5000),
                 SwitchControl.SwitchState.Right => (SwitchProtocol.USB, 8000),
@@ -335,33 +365,45 @@ namespace PKHeX_Raid_Plugin
             tb_port.Enabled = !e.IsLeft;
         }
 
+        private DateTime _buttonTime = DateTime.MinValue;
+        private async void Refresh_Clicked(object sender, EventArgs e)
+        {
+            var now = DateTime.Now;
+            if ((now - _buttonTime).TotalMilliseconds < 1000)
+                return;
+            _buttonTime = now;
+            var token = new CancellationToken();
+            await RefreshRaids(token);
+        }
+
         private async Task AttemptConnection()
         {
             var token = new CancellationToken();
+            IsConnecting = true;
 
-            try
-            {
-                var config = _selectedProtocol switch
+                try
+                { 
+                    var config = _selectedProtocol switch
+                    {
+                        SwitchProtocol.USB => new SwitchConnectionConfig { Port = Port, Protocol = SwitchProtocol.USB },
+                        SwitchProtocol.WiFi => new SwitchConnectionConfig { IP = Ip, Port = Port, Protocol = SwitchProtocol.WiFi },
+                        _ => throw new ArgumentOutOfRangeException("NoProtocol"),
+                    };
+                    var state = new DeviceState
+                    {
+                        Connection = config,
+                        InitialRoutine = RoutineType.ReadWrite,
+                    };
+                    Executor = new DeviceExecutor(state);
+                    await Executor.RunAsync(token).ConfigureAwait(false);
+                }
+                catch (Exception ex)
                 {
-                    SwitchProtocol.USB => new SwitchConnectionConfig { Port = Port, Protocol = SwitchProtocol.USB },
-                    SwitchProtocol.WiFi => new SwitchConnectionConfig { IP = Ip, Port = Port, Protocol = SwitchProtocol.WiFi },
-                    _ => throw new ArgumentOutOfRangeException("NoProtocol"),
-                };
-                var state = new DeviceState
-                {
-                    Connection = config,
-                    InitialRoutine = RoutineType.ReadWrite,
-                };
-                Executor = new DeviceExecutor(state);
-                await Executor.RunAsync(token).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Disconnect();
-                MessageBox.Show($"{ex.Message}");
+                    Disconnect();
+                    MessageBox.Show($"{ex.Message}");
+                    IsConnecting = false;
                 return;
-            }
-
+                }
 
             Plugin_Settings.Default.address = Ip;
             Plugin_Settings.Default.port = Port;
@@ -373,60 +415,27 @@ namespace PKHeX_Raid_Plugin
             Plugin_Settings.Default.Save();
             try
             {
-                _maxProgress = 7;
-                _currentProgress = 0;
-                progressBar.Visible = true;
                 await Executor.Connect(token).ConfigureAwait(false);
-                if (Executor.Connection.Connected)
-                   Connected = true;
-                UpdateProgress(_currentProgress++, _maxProgress);
+
+                Connected = Executor.Connection.Connected;
+                var info = Connected ? "Connected." : "Failed.";
+                QueueAnnouncement(info, 2000);
+                IsConnecting = false;
 
                 var version = await Executor.ReadGame(token).ConfigureAwait(false);
-                UpdateProgress(_currentProgress++, _maxProgress);
-
                 if (_SAV == null) return;
-
                 _SAV.Version = version;
-                UpdateProgress(_currentProgress++, _maxProgress);
 
-                var status = await Executor.GetBytes(BlockDefinitions.MyStatus, token);
-                var myStatusBlock = _SAV.Accessor.GetBlock(BlockDefinitions.MyStatus.Key);
-                myStatusBlock.ChangeData(status);
-                UpdateProgress(_currentProgress++, _maxProgress);
+                await RefreshRaids(token);
 
-                var raid = await Executor.GetBytes(BlockDefinitions.Raid, token);
-                var raidBlock = _SAV.Accessor.GetBlock(BlockDefinitions.Raid.Key);
-                raidBlock.ChangeData(raid);
-                UpdateProgress(_currentProgress++, _maxProgress);
-
-                var armorRaid = await Executor.GetBytes(BlockDefinitions.RaidArmor, token);
-                var armorRaidBlock = _SAV.Accessor.GetBlock(BlockDefinitions.RaidArmor.Key);
-                armorRaidBlock.ChangeData(armorRaid);
-                UpdateProgress(_currentProgress++, _maxProgress);
-
-                var crownRaid = await Executor.GetBytes(BlockDefinitions.RaidCrown, token);
-                var crownRaidBlock = _SAV.Accessor.GetBlock(BlockDefinitions.RaidCrown.Key);
-                crownRaidBlock.ChangeData(crownRaid);
-                UpdateProgress(_currentProgress++, _maxProgress);
-
-                if (Cnct_btn.InvokeRequired)                
-                    Cnct_btn.Invoke(() => BubblePopup.ShowBubble(Cnct_btn, PopupShape.Ellipse, "Connected"));               
-                else             
-                    BubblePopup.ShowBubble(Cnct_btn, PopupShape.Ellipse, "Connected");
-
+                QueueAnnouncement("", 2000);
                 Log($"{"ExecutorConnected"} {version} - {_SAV.OT} ({_SAV.TID16})");
-                UpdateProgress(_maxProgress, _maxProgress);
-                UpdateRaids(_SAV);
             }
             catch (Exception ex)
             {
                 Disconnect();
                 MessageBox.Show($"Connection Failed \n {ex.Message}");
-
                 Connected = false;
-                _currentProgress = 0;
-                _maxProgress = 0;
-                progressBar.Visible = false;
                 return;
             }
         }
@@ -436,6 +445,62 @@ namespace PKHeX_Raid_Plugin
             try { Executor.Disconnect(); }
             catch { }
             Connected = false;
+            _currentProgress = 0;
+            if (!progressBar.Visible)
+                return;
+            if (progressBar.InvokeRequired)
+                progressBar.Invoke(() => progressBar.Visible = false);
+            else
+                progressBar.Visible = false;
+            QueueAnnouncement("", 0);
+        }
+
+        private async Task RefreshRaids(CancellationToken token)
+        {
+            if (!Connected || !Executor.Connection.Connected)
+                return;
+            if (_SAV == null) return;
+
+            QueueAnnouncement("Reading dens..", 2000);
+            _currentProgress = 0;
+            if (progressBar.InvokeRequired)
+                progressBar.Invoke(() => progressBar.Visible = true);
+            else progressBar.Visible = true;
+            
+            UpdateProgress(_currentProgress++, _maxProgress);
+
+            var status = await Executor.GetBytes(BlockDefinitions.MyStatus, token);
+            var myStatusBlock = _SAV.Accessor.GetBlock(BlockDefinitions.MyStatus.Key);
+            myStatusBlock.ChangeData(status);
+            UpdateProgress(_currentProgress++, _maxProgress);
+
+            var raid = await Executor.GetBytes(BlockDefinitions.Raid, token);
+            var raidBlock = _SAV.Accessor.GetBlock(BlockDefinitions.Raid.Key);
+            raidBlock.ChangeData(raid);
+            UpdateProgress(_currentProgress++, _maxProgress);
+
+            var armorRaid = await Executor.GetBytes(BlockDefinitions.RaidArmor, token);
+            var armorRaidBlock = _SAV.Accessor.GetBlock(BlockDefinitions.RaidArmor.Key);
+            armorRaidBlock.ChangeData(armorRaid);
+            UpdateProgress(_currentProgress++, _maxProgress);
+
+            var crownRaid = await Executor.GetBytes(BlockDefinitions.RaidCrown, token);
+            var crownRaidBlock = _SAV.Accessor.GetBlock(BlockDefinitions.RaidCrown.Key);
+            crownRaidBlock.ChangeData(crownRaid);
+            UpdateProgress(_currentProgress++, _maxProgress);
+
+            while (_currentProgress < _maxProgress)
+            {
+                UpdateProgress(_currentProgress, _maxProgress);
+                _currentProgress++;
+            }
+
+            UpdateRaids(_SAV);
+            if (progressBar.InvokeRequired)
+                await Task.Delay(2000, token);
+            progressBar.Invoke(() => progressBar.Visible = false);
+            _currentProgress = 0;
+            QueueAnnouncement("Complete.", 2000);
         }
 
         private void UpdateProgress(int currProgress, int maxProgress)
@@ -449,16 +514,84 @@ namespace PKHeX_Raid_Plugin
                 progressBar.Value = value;
         }
 
-        private void OnPropertyChange(Object value)
+       private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (value is bool connected)
-                Cnct_btn.Text = connected ? "Disconnect" : "Connect";
-        }
+            switch (e.PropertyName)
+            {
+                case nameof(Connected):
+                    Cnct_btn.Text = Connected ? "Disconnect" : "Connect";
+                    break;
+
+                case nameof(IsConnecting):
+
+                    while (IsConnecting)
+                    {
+                        QueueAnnouncement("Connecting.", 1000);
+                        QueueAnnouncement("Connecting..", 1000);
+                        QueueAnnouncement("Connecting...", 1000);
+                    }
+                    break;
+            }
+
+        } 
 
         private void Log(string message)
         {
             if (Connected)
                 Executor.Log(message);
+        }
+
+        private Queue<(string message, int delayMs)> _messageQueue = new();
+        private System.Windows.Forms.Timer _messageTimer = new();
+        private DateTime _lastMessageTime;
+
+        private void QueueAnnouncement(string message, int delayMs)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(() => QueueAnnouncement(message, delayMs));
+                return;
+            }
+
+            _messageQueue.Enqueue((message, delayMs));
+
+            _messageTimer ??= new System.Windows.Forms.Timer();
+                _messageTimer.Interval = 100;
+                _messageTimer.Tick += ProcessQueue;
+
+            if (!_messageTimer.Enabled)
+            {
+                _lastMessageTime = DateTime.Now.AddMilliseconds(-1000); // Ensure first message triggers
+                _messageTimer.Start();
+            }
+        }
+
+        private void ProcessQueue(object? sender, EventArgs e)
+        {
+            if (_messageQueue.Count == 0)
+            {
+                _messageTimer.Stop();
+                return;
+            }
+
+            if ((DateTime.Now - _lastMessageTime).TotalMilliseconds >= _messageQueue.Peek().delayMs)
+            {
+                var (msg, _) = _messageQueue.Dequeue();
+                Announce(msg);
+                _lastMessageTime = DateTime.Now;
+            }
+        }
+
+        private void Announce(string message)
+        {
+            if (lbl_memo.InvokeRequired)
+                lbl_memo.Invoke(() => lbl_memo.Text = message);
+            else lbl_memo.Text = message;
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }

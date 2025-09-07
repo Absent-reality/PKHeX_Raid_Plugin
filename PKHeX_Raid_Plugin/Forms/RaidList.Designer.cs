@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             GB_Left = new System.Windows.Forms.GroupBox();
-            groupBox1 = new System.Windows.Forms.GroupBox();
+            btn_refresh = new System.Windows.Forms.Button();
             progressBar = new System.Windows.Forms.ProgressBar();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            lbl_memo = new System.Windows.Forms.Label();
             tb_ip = new IPTextBox();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
@@ -82,6 +84,8 @@
             // 
             // GB_Left
             // 
+            GB_Left.Controls.Add(btn_refresh);
+            GB_Left.Controls.Add(progressBar);
             GB_Left.Controls.Add(groupBox1);
             GB_Left.Controls.Add(CHK_Watts);
             GB_Left.Controls.Add(CHK_Wishing);
@@ -121,9 +125,29 @@
             GB_Left.TabStop = false;
             GB_Left.Text = "Den List";
             // 
+            // btn_refresh
+            // 
+            btn_refresh.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            btn_refresh.Location = new System.Drawing.Point(9, 466);
+            btn_refresh.Name = "btn_refresh";
+            btn_refresh.Size = new System.Drawing.Size(83, 23);
+            btn_refresh.TabIndex = 39;
+            btn_refresh.Text = "Refresh List";
+            btn_refresh.UseVisualStyleBackColor = true;
+            btn_refresh.Click += Refresh_Clicked;
+            // 
+            // progressBar
+            // 
+            progressBar.Location = new System.Drawing.Point(6, 562);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new System.Drawing.Size(256, 10);
+            progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            progressBar.TabIndex = 38;
+            progressBar.Visible = false;
+            // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(progressBar);
+            groupBox1.Controls.Add(lbl_memo);
             groupBox1.Controls.Add(tb_ip);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(label5);
@@ -139,13 +163,15 @@
             groupBox1.TabIndex = 33;
             groupBox1.TabStop = false;
             // 
-            // progressBar
+            // lbl_memo
             // 
-            progressBar.Location = new System.Drawing.Point(16, 155);
-            progressBar.Name = "progressBar";
-            progressBar.Size = new System.Drawing.Size(123, 10);
-            progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            progressBar.TabIndex = 38;
+            lbl_memo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lbl_memo.AutoSize = true;
+            lbl_memo.Location = new System.Drawing.Point(45, 152);
+            lbl_memo.Name = "lbl_memo";
+            lbl_memo.Size = new System.Drawing.Size(0, 15);
+            lbl_memo.TabIndex = 38;
+            lbl_memo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tb_ip
             // 
@@ -647,5 +673,7 @@
         private SwitchControl protocolSwitch;
         private IPTextBox tb_ip;
         private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Button btn_refresh;
+        private System.Windows.Forms.Label lbl_memo;
     }
 }

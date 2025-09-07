@@ -34,8 +34,6 @@ namespace PKHeX_Raid_Plugin.Connections
         private const string SwordID = "0100ABF008968000";
         private const string ShieldID = "01008DB008C2C000";
 
-        private ulong KeyBlockAddress = 0;
-
         public override string GetSummary()
         {
             var current = Config.CurrentRoutineType;
@@ -69,7 +67,6 @@ namespace PKHeX_Raid_Plugin.Connections
 
         public void Disconnect()
         {
-            KeyBlockAddress = 0;
             HardStop();
             Connection.Disconnect();
         }

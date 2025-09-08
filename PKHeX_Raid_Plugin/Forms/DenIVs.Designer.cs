@@ -1,4 +1,6 @@
-﻿namespace PKHeX_Raid_Plugin
+﻿using PKHeX_Raid_Plugin;
+
+namespace PKHeX_Raid_Plugin
 {
     partial class DenIVs
     {

@@ -107,7 +107,7 @@ namespace PKHeX_Raid_Plugin
             var toolsItems = tools.DropDownItems;
             var searchResults = toolsItems.Find(SubMenuName, false);
             var subMenu = GetSubMenu(tools, searchResults);
-            AddSubMenuItems(subMenu);        
+            AddSubMenuItems(subMenu);
         }
 
         private static ToolStripMenuItem GetSubMenu(ToolStripDropDownItem tools, ToolStripItem[] search)

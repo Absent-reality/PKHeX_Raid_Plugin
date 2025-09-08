@@ -13,7 +13,7 @@ namespace PKHeX_Raid_Plugin
         public readonly uint SID;
         private readonly GameVersion Game;
 
-        private readonly RaidTables _raidTables = new RaidTables();
+        private readonly RaidTables _raidTables = new();
         private readonly RaidParameters[] DenList;
 
         public RaidManager(SaveBlockAccessor8SWSH blocks, GameVersion game, int badges, uint tid, uint sid)

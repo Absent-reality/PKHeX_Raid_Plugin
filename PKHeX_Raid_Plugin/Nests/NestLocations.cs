@@ -61,7 +61,7 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x17501b56dc6c969a, 0xba8a496710180833, 13, 393, 962), //41 76
             new NestHashDetail(0x17428756dc6110c2, 0xba805767100fcb78, 13, 328, 761), //05 46
             new NestHashDetail(0x17428356dc6109f6, 0xba805c67100fd3f7, 13, 352, 765), //01 43
-            new NestHashDetail(0x173f0356dc5dfa9f, 0xba805467100fc65f, 07, 443, 895), //15 51
+            new NestHashDetail(0x173f0356dc5dfa9f, 0xba805467100fc65f, 07, 425, 855), //15 51
             new NestHashDetail(0x173f0056dc5df586, 0xba805e67100fd75d, 07, 388, 817), //12 45
             new NestHashDetail(0x173eff56dc5df3d3, 0xba805a67100fd091, 07, 443, 830), //11 49
             new NestHashDetail(0x173f0356dc5dfa9f, 0x45009ed99cf56e51, 07, 410, 952), //15 83
@@ -128,6 +128,10 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x173f0656dc5dffb8, 0x4500a0d99cf571b7, 09, 128, 058), //18 77
             new NestHashDetail(0x17428c56dc611941, 0xba805d67100fd5aa, 09, 161, 080), //08 44
             new NestHashDetail(0x17458656dc6344e6, 0xba8a4f6710181265, 09, 143, 039), //34 74
+
+//                                        Island of Armor
+//              ------------------------------------------------------------------
+
             new NestHashDetail(0x79b25a4f80255a38, 0xc8ea8c1618ab0a58, 17, 643, 822), //115 116
             new NestHashDetail(0xe2c6e5e725342f4a, 0x89955cc3a594e51a, 17, 770, 794), //125 126
             new NestHashDetail(0x6d015b7858eb5119, 0x53441b80e563ef1f, 17, 723, 812), //109 110
@@ -138,6 +142,7 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x6e6b46639f77f0c8, 0x1c1962488c012ee8, 17, 683, 792), //105 106
             new NestHashDetail(0xbc3d01fff751cde4, 0x6f948f09933cdfc, 17, 831, 770),  //123 124
             new NestHashDetail(0x4257e30e1c471230, 0xfe9695f9799c6258, 17, 727, 779), //137 138
+
             new NestHashDetail(0x4257e40e1c4713e3, 0xfe9696f9799c640b, 18, 662, 681), //135 136
             new NestHashDetail(0x2998f2424d0353eb, 0xae57b2a84974c3a1, 18, 741, 680), //111 112
             new NestHashDetail(0xe2c6e5e725342f4a, 0x89955cc3a594e51a, 18, 697, 645), //125 126
@@ -147,12 +152,14 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x21f6c865b3513bab, 0xd8f0ffcde5822363, 18, 667, 614), //101 102
             new NestHashDetail(0x21f6c965b3513d5e, 0xd8f100cde5822516, 18, 609, 668), //99  100
             new NestHashDetail(0x4257e50e1c471596, 0xfe9697f9799c65be, 18, 554, 577), //133 134
+
             new NestHashDetail(0x6d015b7858eb5119, 0x53441b80e563ef1f, 19, 533, 524), //109 110
             new NestHashDetail(0xdb8629cba3383296, 0x4f1e561dd73ed3d8, 19, 687, 535), //154 145
             new NestHashDetail(0x6e6b46639f77f0c8, 0x1c1962488c012ee8, 19, 622, 521), //105 106
             new NestHashDetail(0xe2c6e5e725342f4a, 0x89955cc3a594e51a, 19, 578, 512), //125 126
             new NestHashDetail(0x5c9a35ca819b38c8, 0xf9222e1acdf486e8, 19, 636, 492), //119 120
             new NestHashDetail(0x4257e40e1c4713e3, 0xfe9696f9799c640b, 19, 553, 529), //135 136
+
             new NestHashDetail(0x5b72bfac0ff3f885, 0x316e6b5e74bc7aa3, 20, 488, 480), //113 114
             new NestHashDetail(0x4257e40e1c4713e3, 0xfe9696f9799c640b, 20, 483, 556), //135 136
             new NestHashDetail(0x6e6b46639f77f0c8, 0x1c1962488c012ee8, 20, 465, 605), //105 106
@@ -161,21 +168,26 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x4257e30e1c471230, 0xfe9695f9799c6258, 20, 320, 526), //137 138
             new NestHashDetail(0xb8a5e528bfee71bc, 0xdf017f3fefba2704, 20, 442, 609), //103 104
             new NestHashDetail(0x4c12cee7784c8b8, 0x7288f0346fd3cdd8, 20, 412, 566),  //127 128
+
             new NestHashDetail(0x50eaf4685fa07085, 0xf9280759d6cc62a3, 21, 947, 506), //129 130
+
             new NestHashDetail(0xbc3d01fff751cde4, 0x6f948f09933cdfc, 22, 912, 467),  //123 124
             new NestHashDetail(0x5584521f1e549486, 0x55846e1f1e54c41a, 22, 925, 433), //156 157
             new NestHashDetail(0xa178d4769765abac, 0xf4a830850f51d034, 22, 913, 408), //107 108
             new NestHashDetail(0xc63dec8a65b5c540, 0x6aebee2a2d6d8470, 22, 895, 365), //121 122
+
             new NestHashDetail(0x60ef1d711ae30cf0, 0xc80756327d5de060, 23, 526, 650), //103 104
             new NestHashDetail(0x4257e40e1c4713e3, 0x4f1e5b1dd73edc57, 23, 576, 714), //135 148
             new NestHashDetail(0x4c12cee7784c8b8, 0x7288f0346fd3cdd8, 23, 565, 726),  //127 128
             new NestHashDetail(0x50eaf4685fa07085, 0xf9280759d6cc62a3, 23, 586, 726), //129 130
             new NestHashDetail(0x4257e50e1c471596, 0xfe9697f9799c65be, 23, 621, 749), //133 134
             new NestHashDetail(0x21f6c865b3513bab, 0xd8f0ffcde5822363, 23, 528, 695), //101 102
+
             new NestHashDetail(0x5b72bfac0ff3f885, 0x316e6b5e74bc7aa3, 24, 408, 809), //113 114
             new NestHashDetail(0xb0c9af2202b0a19e, 0x4f1e5c1dd73ede0a, 24, 426, 790), //131 151
             new NestHashDetail(0x4257e30e1c471230, 0xfe9695f9799c6258, 24, 360, 850), //137 138
             new NestHashDetail(0xa178d4769765abac, 0xf4a830850f51d034, 24, 327, 787), //107 108
+
             new NestHashDetail(0x5c9a35ca819b38c8, 0xf9222e1acdf486e8, 25, 707, 421), //119 120
             new NestHashDetail(0xdb8629cba3383296, 0x4f1e561dd73ed3d8, 25, 832, 398), //154 145
             new NestHashDetail(0xb8a5e528bfee71bc, 0xdf017f3fefba2704, 25, 591, 430), //117 118
@@ -183,9 +195,11 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x2998f2424d0353eb, 0xae57b2a84974c3a1, 25, 758, 338), //111 112
             new NestHashDetail(0x6d015b7858eb5119, 0x4f1e5a1dd73edaa4, 25, 719, 377), //109 149
             new NestHashDetail(0x21f6c865b3513bab, 0xd8f0ffcde5822363, 25, 659, 397), //101 102
+
             new NestHashDetail(0x60ef1d711ae30cf0, 0x4f1e5d1dd73edfbd, 26, 665, 243), //103 150
             new NestHashDetail(0x5b72bfac0ff3f885, 0x316e6b5e74bc7aa3, 26, 784, 212), //113 114
             new NestHashDetail(0x79b25a4f80255a38, 0xc8ea8c1618ab0a58, 26, 881, 235), //115 116
+
             new NestHashDetail(0x6b37a94863bf68c0, 0x4f1e591dd73ed8f1, 27, 321, 1004),//155 146
             new NestHashDetail(0x4257ea0e1c471e15, 0xfe969cf9799c6e3d, 27, 782, 962), //139 140
             new NestHashDetail(0x40bdbe4f3bcbac86, 0x9fdf11a0cde96b2e, 27, 1040, 752),//152 153
@@ -193,6 +207,7 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x6d015b7858eb5119, 0x53441b80e563ef1f, 27, 759, 1015),//109 110
             new NestHashDetail(0xa178d4769765abac, 0xf4a830850f51d034, 27, 558, 1082),//107 108
             new NestHashDetail(0xb0c9af2202b0a19e, 0x3d6f1fcb3898d356, 27, 523, 993), //131 132
+
             new NestHashDetail(0x60ef1d711ae30cf0, 0xc80756327d5de060, 28, 129, 797), //103 104
             new NestHashDetail(0xb8a5e528bfee71bc, 0xdf017f3fefba2704, 28, 75, 658),  //117 118
             new NestHashDetail(0x6b37a94863bf68c0, 0x4f1e591dd73ed8f1, 28, 120, 523), //155 146
@@ -202,16 +217,19 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x4c12cee7784c8b8, 0x7288f0346fd3cdd8, 28, 174, 852),  //127 128
             new NestHashDetail(0x4257ea0e1c471e15, 0xfe969cf9799c6e3d, 28, 162, 808), //139 140
             new NestHashDetail(0xa178d4769765abac, 0xf4a830850f51d034, 28, 162, 763), //107 108
+
             new NestHashDetail(0xe2c6e5e725342f4a, 0x89955cc3a594e51a, 29, 299, 356), //125 126
             new NestHashDetail(0x21f6c965b3513d5e, 0xd8f100cde5822516, 29, 214, 349), //99  100
             new NestHashDetail(0x2998f2424d0353eb, 0xae57b2a84974c3a1, 29, 185, 302), //111 112
             new NestHashDetail(0x4257ea0e1c471e15, 0xfe969cf9799c6e3d, 29, 247, 298), //139 140
             new NestHashDetail(0x4257e30e1c471230, 0x4f1e581dd73ed73e, 29, 271, 273), //137 147
+
             new NestHashDetail(0xb0c9af2202b0a19e, 0x3d6f1fcb3898d356, 30, 468, 451), //131 132
             new NestHashDetail(0xbc3d01fff751cde4, 0x6f948f09933cdfc, 30, 605, 166),  //123 124
             new NestHashDetail(0xc63dec8a65b5c540, 0x6aebee2a2d6d8470, 30, 672, 120), //121 122
             new NestHashDetail(0x4257ea0e1c471e15, 0xfe969cf9799c6e3d, 30, 716, 91),  //139 140
             new NestHashDetail(0x6e6b46639f77f0c8, 0x1c1962488c012ee8, 30, 597, 105), //105 106
+
             new NestHashDetail(0xea4c3915ea6f95a0, 0x3ea9df3b7b2b5990, 31, 471, 152), //143 144
             new NestHashDetail(0xea4c3915ea6f95a0, 0x3ea9df3b7b2b5990, 31, 490, 194), //143 144
             new NestHashDetail(0xea4c3915ea6f95a0, 0x3ea9df3b7b2b5990, 31, 464, 237), //143 144
@@ -219,101 +237,106 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0xea4c3915ea6f95a0, 0x3ea9df3b7b2b5990, 31, 386, 195), //143 144
             new NestHashDetail(0xea4c3915ea6f95a0, 0x3ea9df3b7b2b5990, 31, 414, 148), //143 144
 
-            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 32, 455, 710), //166 167
-            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 32, 571, 697), //180 181
-            new NestHashDetail(0x685db02aaedbcf61, 0x2cd8cf9a88739f98, 32, 550, 705), //168 169
-            new NestHashDetail(0x2640fa844b19c3cf, 0x422f95fb66a95706, 32, 654, 775), //158 159
-            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 32, 699, 765), //182 183
-            new NestHashDetail(0x685db02aaedbcf61, 0x2cd8cf9a88739f98, 32, 624, 737), //168 169
-            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 33, 431, 903), //190 191
-            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 33, 458, 887), //176 177
-            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 33, 514, 925), //186 187
-            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 33, 461, 925), //172 173
-            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 33, 598, 936), //164 165
-            new NestHashDetail(0x7ea57d4a1ef4c796, 0xe0236c3b91edbebb, 34, 443, 1088), //188 189
-            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 34, 550, 1088), //160 161
-            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 34, 811, 1048), //174 175
-            new NestHashDetail(0xf01dfb231a467c06, 0x8b5a3178ae3f236b, 34, 817, 974), //192 193
-            new NestHashDetail(0x2640fa844b19c3cf, 0x422f95fb66a95706, 34, 921, 996), //158 159
-            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 34, 889, 1048), //162 163
-            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 34, 993, 971), //184 185
-            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 34, 1082, 974), //172 173
-            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 34, 1566, 1015), //166 167
-            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 34, 642, 1067), //180 181
-            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 34, 675, 1197), //174 175 tbc
-            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 34, 761, 1086), //186 187
-            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 34, 1450, 1175), //190 191
-            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 34, 1628, 1162), //180 181
-            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 34, 969, 988), //170 171 tbc
-            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 34, 975, 1284), //162 163
-            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 34, 788, 1284), //170 171 tbc
-            new NestHashDetail(0x17d327792698d15f, 0xb20a5ed251cd0456, 34, 1480, 1121), //178 179
-            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 34, 1399, 1205), //164 165
-            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 34, 1423, 1102), //160 161
-            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 34, 1542, 1254), //176 177
+//                                          Crown Tundra
+//              -------------------------------------------------------------------
 
-            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 35, 856, 1135), //182 183
-            new NestHashDetail(0xf01dfb231a467c06, 0x8b5a3178ae3f236b, 35, 969, 1129), //192 193
+            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 32, 435, 785), //166 167 == den 1, Slippery Slope 1, SSW of train station
+            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 32, 605, 740), //180 181 == den 2, Slippery Slope 2, W of train staion, NW corner of area
+            new NestHashDetail(0x685db02aaedbcf61, 0x2cd8cf9a88739f98, 32, 590, 815), //168 169 == den 3, Slippery Slope 3, W of dynamax lair, NNW of den 4
+            new NestHashDetail(0x2640fa844b19c3cf, 0x422f95fb66a95706, 32, 654, 855), //158 159 == den 4, Slippery Slope 4, N of village, central S of area, W of large rock
+            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 32, 699, 855), //182 183 == den 5, Slippery Slope 5, opposite side of rock E of den 4
+            new NestHashDetail(0x685db02aaedbcf61, 0x2cd8cf9a88739f98, 32, 515, 785), //168 169 == den 6, Slippery Slope 6, SSE of train station
 
-            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 36, 1581, 914), //180 181
-            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 36, 1462,  827), //172 173
-            new NestHashDetail(0x7ea57d4a1ef4c796, 0xe0236c3b91edbebb, 36, 1426, 637), //188 189
-            new NestHashDetail(0x17d327792698d15f, 0xb20a5ed251cd0456, 36, 1310, 558), //178 179
-            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 36, 1263, 773), //186 187
-            new NestHashDetail(0x685db02aaedbcf61, 0x2cd8cf9a88739f98, 36, 1328, 669), //168 169
-            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 36, 1221, 683), //190 191
-            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 36, 1379, 558), //160 161
-            new NestHashDetail(0x58c3011eda59ea53, 0xb4dbd8428706d1c2, 36, 1539, 585), //196 197
+            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 33, 431, 965), //190 191 == den 7, Frostpoint Field 1, Far SW corner of area, SW of village
+            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 33, 458, 987), //176 177 == den 8, Frostpoint Field 2, SSW of village, in group of small trees
+            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 33, 510, 1020), //186 187 == den 9, Frostpoint Field 3, Opposite side of rock from den 10
+            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 33, 461, 1025), //172 173 == den 10, Frostpoint Field 4, SW corner of area, W of large rock
+            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 33, 598, 1036), //164 165 == den 11, Frostpoint Field 5, SSE of village, SW of arch
 
-            new NestHashDetail(0x7ea57d4a1ef4c796, 0xe0236c3b91edbebb, 37, 1444, 299), //188 189
-            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 37, 1474, 329), //184 185
-            new NestHashDetail(0x17d327792698d15f, 0xb20a5ed251cd0456, 37, 1402, 299), //178 179
+            new NestHashDetail(0x7ea57d4a1ef4c796, 0xe0236c3b91edbebb, 34, 443, 1175), //188 189 == den 12, Giant's Bed 1, S of W shrine
+            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 34, 490, 1175), //160 161 == den 13, Giant's Bed 2, E of den 12
+            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 34, 811, 1150), //174 175 == den 14, Giant's Bed 3, SW of N central ruins
+            new NestHashDetail(0xf01dfb231a467c06, 0x8b5a3178ae3f236b, 34, 817, 1074), //192 193 == den 15, Giant's Bed 4, NW side of N central ruins
+            new NestHashDetail(0x2640fa844b19c3cf, 0x422f95fb66a95706, 34, 921, 1065), //158 159 == den 16, Giant's Bed 5, W of N "U" shaped pond, E side of N central ruins
+            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 34, 889, 1150), //162 163 == den 17, Giant's Bed 6, NNE of cemetery
+            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 34, 993, 1065), //184 185 == den 18, Giant's Bed 7, Central land mass of N "U" shaped pond
+            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 34, 1091, 1069), //172 173 == den 19, Giant's Bed 8, E of N "U" shaped pond
+            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 34, 1190, 1090), //166 167 == den 20, Giant's Bed 9, NE corner of area, S of Snowslide Slope
+            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 34, 565, 1135), //180 181 == den 21, Giant's Bed 10, S of central NW rock / butte
+            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 34, 565, 1197), //174 175 == den 22, Giant's Bed 11, S of den 21
+            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 34, 761, 1186), //186 187 == den 23, Giant's Bed 12, NW of Old cemetery, E of den 22
+            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 34, 1075, 1290), //190 191 == den 24, Giant's Bed 13, N of river, W of den 32
+            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 34, 1210, 1272), //180 181 == den 25, Giant's Bed 14, WSW of shrine, N of den 32
+            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 34, 969, 1190), //170 171 == den 26, Giant's Bed 15, SE side of N "U" shaped pond 
+            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 34, 975, 1405), //162 163 == den 27, Giant's Bed 16, Middle section of river, E of alcove
+            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 34, 788, 1405), //170 171 == den 28, Giant's Bed 17, Far W end of river
+            new NestHashDetail(0x17d327792698d15f, 0xb20a5ed251cd0456, 34, 1075, 1235), //178 179 == den 29, Giant's Bed 18, E of Old cemetery N of stone arch
+            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 34, 1015, 1335), //164 165 == den 30, Giant's Bed 19, SSE of Old cemetery
+            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 34, 945, 1190), //160 161 == den 31, Giant's Bed 20, N of Old cemetery
+            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 34, 1170, 1350), //176 177 == den 32, Giant's Bed 21, SE corner of area by river
 
-            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 38, 1325, 237), //166 167
+            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 35, 856, 1245), //182 183 == den 33, Old cemetery 1, W side of cemetery
+            new NestHashDetail(0xf01dfb231a467c06, 0x8b5a3178ae3f236b, 35, 969, 1245), //192 193 == den 34, Old cemetery, E side of cemetery
 
-            new NestHashDetail(0x2640fa844b19c3cf, 0x422f95fb66a95706, 39, 1604, 1058), //158 159
-            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 39, 1634, 1056), //162 163
-            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 39, 1720, 1075), //186 187
-            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 39, 1655, 999), //166 167
-            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 39, 1711, 1042), //182 183
+            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 36, 1205, 990), //180 181 == den 35, Slowslide Slope 1, SE corner of area, N of watt trader
+            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 36, 990,  860), //172 173 == den 36, Snowslide Slope 2, SW corner of ruins
+            new NestHashDetail(0x7ea57d4a1ef4c796, 0xe0236c3b91edbebb, 36, 1040, 637), //188 189 == den 37, Snowslide Slope 3, SSW of Tunnel entrance
+            new NestHashDetail(0x17d327792698d15f, 0xb20a5ed251cd0456, 36, 925, 615), //178 179 == den 38, Snowslide Slope 4, W of Tunnel entrance, NW corner of area
+            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 36, 875, 850), //186 187 == den 39, Snowslide Slope 5, ESE of shrine, W of ruins
+            new NestHashDetail(0x685db02aaedbcf61, 0x2cd8cf9a88739f98, 36, 928, 669), //168 169 == den 40, Snowslide Slope 6, ENE of shrine
+            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 36, 900, 752), //190 191 == den 41, Snowslide Slope 7, SE of shrine
+            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 36, 990, 615), //160 161 == den 42, Snowslide Slope 8, W of Tunnel entrance
+            new NestHashDetail(0x58c3011eda59ea53, 0xb4dbd8428706d1c2, 36, 1070, 630), //196 197 == den 43, Snowslide Slope 9, Hidden alcove accessed from Tunnel
 
-            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 40, 2207, 862), //170 171 tbc
-            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 40, 2201, 716), //184 185
-            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 40, 2525,  637), //162 163
-            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 40, 2579,  849), //172 173
-            new NestHashDetail(0x7ea57d4a1ef4c796, 0xe0236c3b91edbebb, 40, 2579, 762), //188 189
-            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 40, 2599, 669), //170 171 tbc
-            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 40, 2460, 865), //174 175
-            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 40, 2632, 634), //182 183
-            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 40, 2466, 767), //186 187
-            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 40, 2489, 686), //190 191
-            new NestHashDetail(0x685db02aaedbcf61, 0x2cd8cf9a88739f98, 40, 2665, 718), //168 169
-            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 40, 2614, 599), //164 165
-            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 40, 2442, 620), //176 177
-            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 40, 2602, 914), //170 171
+            new NestHashDetail(0x7ea57d4a1ef4c796, 0xe0236c3b91edbebb, 37, 997, 319), //188 189 == den 44, Path to the Peak 1, SE corner of forest
+            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 37, 965, 359), //184 185 == den 45, Path to the Peak 2, SW corner of forest
+            new NestHashDetail(0x17d327792698d15f, 0xb20a5ed251cd0456, 37, 997, 299), //178 179 == den 46, Path to the Peak 3, NE corner of forest
 
-            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 41, 2293, 933), //184 185
-            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 41, 2320, 963), //164 165
+            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 38, 935, 257), //166 167 == den 47, Crown Shrine 1, SW of shrine
 
-            new NestHashDetail(0x2640fa844b19c3cf, 0x422f95fb66a95706, 42, 871, 1317), //158 159
-            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 42, 1254, 1418), //176 177
-            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 42, 1361, 1412), //174 175 tbc
-            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 42, 1468, 1412), //180 181
-            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 42, 1515, 1404), //160 161 tbc
-            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 42, 1598, 1646), //160 161 tbc
-            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 42, 1679, 1526), //166 167
-            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 42, 1432, 1641), //174 175 tbc
-            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 42, 1379, 1662), //164 165
-            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 42, 811, 1665), //172 173
-            new NestHashDetail(0xe78d0a25d0c67a32, 0xbdf065bb6332909f, 42, 681, 1641), //194 195
-            new NestHashDetail(0xf01dfb231a467c06, 0x8b5a3178ae3f236b, 42, 761, 1627), //192 193
-            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 42, 773, 1575), //190 191
-            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 42, 1462, 1578), //162 163
-            new NestHashDetail(0x17d327792698d15f, 0xb20a5ed251cd0456, 42, 1319, 1608), //178 179
-            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 42, 1290, 1456), //182 183
-            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 42, 1462, 1472), //184 185
+            new NestHashDetail(0x2640fa844b19c3cf, 0x422f95fb66a95706, 39, 1177, 1158), //158 159 == den 48, Giant's Foot 1, W entrance to area
+            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 39, 1228, 1156), //162 163 == den 49, Giant's Foot 2, S of West ruins
+            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 39, 1350, 1175), //186 187  == den 50, Giant's Foot 3, S of East ruins 
+            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 39, 1244, 1100), //166 167 == den 51, Giant's Foot 4, W of Roaring Sea Caves entrance
+            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 39, 1322, 1142), //182 183 == den 52, Giant's Foot 5, W building in East ruins
 
-            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 43, 993, 1565), //176 177
+            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 40, 1440, 800), //170 171 == den 53, Frigid Sea 1, E of Roaring Sea Cave's Southern entrance
+            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 40, 1460, 735), //184 185 == den 54, Frigid Sea 2, E of Roaring Sea Cave's Northern entrance
+            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 40, 1830, 770), //162 163 == den 55, Frigid Sea 3, NNE of large island
+            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 40, 1795, 945), //172 173 == den 56, Frigid Sea 4, SW corner of large island
+            new NestHashDetail(0x7ea57d4a1ef4c796, 0xe0236c3b91edbebb, 40, 1825, 850), //188 189 == den 57, Frigid Sea 5, N side of large island
+            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 40, 1715, 965), //170 171 == den 58, Frigid Sea 6, SW of large island
+            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 40, 1527, 929), //174 175 == den 59, Frigid Sea 7, N of den 67 
+            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 40, 1900, 865), //182 183 == den 60, Frigid Sea 8, E of large island and den 66
+            new NestHashDetail(0x9ab5727f28c3d593, 0x1928030ad989ad02, 40, 1665, 840), //186 187 == den 61, Frigid Sea 9, S of Northern rocky point
+            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 40, 1765, 800), //190 191 == den 62, Frigid Sea 10, NNW of large island
+            new NestHashDetail(0x685db02aaedbcf61, 0x2cd8cf9a88739f98, 40, 1890, 980), //168 169 == den 63, Frigid Sea 11, SE of large island
+            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 40, 1900, 775), //164 165 == den 64, Frigid Sea 12, NE of large island
+            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 40, 1675, 740), //176 177 == den 65, Frigid Sea 13, NW of den 62
+            new NestHashDetail(0x685dad2aaedbca48, 0x12ad4e9a799417a5, 40, 1865, 875), //170 171 == den 66, Frigid Sea 14, E of large island
+
+            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 41, 1520, 1015), //184 185 == den 67, Three Point Pass 1, NE of the 3 points
+            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 41, 1455, 1045), //164 165 == den 68, Three Point Pass 2, Western of the 3 points
+
+            new NestHashDetail(0x2640fa844b19c3cf, 0x422f95fb66a95706, 42, 875, 1450), //158 159 == den 69, Ballimere Lake 1, by entrance to river.
+            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 42, 845, 1580), //176 177 == den 70, Ballimere Lake 2, NW of Dyna Tree by ramp
+            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 42, 975, 1500), //174 175 == den 71, Ballimere Lake 3, N of Dyna Tree, W of upper cave entrance
+            new NestHashDetail(0x55e4467f01ec60bb, 0xa5696e4aa8d625a, 42, 1135, 1495), //180 181 == den 72, Ballimere Lake 4, W of upper cave entrance, E of den 71
+            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 42, 1140, 1545), //160 161 == den 73, Ballimere Lake 5, W of lower cave entrance
+            new NestHashDetail(0x3a41c5c485d3edee, 0x6c364ecc3616af63, 42, 1206, 1807), //160 161 == den 74, Ballimere Lake 6, SE by rocky hill
+            new NestHashDetail(0x779e9eb99c1292c, 0x93a637943a964e41, 42, 1293, 1703), //166 167 == den 75, Ballimere Lake 7, E of Dyna Tree, NE of den 74
+            new NestHashDetail(0x52a7dfe87897d15d, 0xc88b8a5990a8ea5c, 42, 1120, 1786), //174 175 == den 76, Ballimere Lake 8, SE of Dyna Tree, S of den 82
+            new NestHashDetail(0xe234e939402a736b, 0x3b3c0865d15b0aca, 42, 990, 1822), //164 165 == den 77, Ballimere Lake 9, Far S middle
+            new NestHashDetail(0x75319113c8c3b924, 0x314acb827c75109, 42, 811, 1818), //172 173 == den 78, Ballimere Lake 10, S of SW ruins
+            new NestHashDetail(0xe78d0a25d0c67a32, 0xbdf065bb6332909f, 42, 680, 1795), //194 195 == den 79, Ballimere Lake 11, SW point
+            new NestHashDetail(0xf01dfb231a467c06, 0x8b5a3178ae3f236b, 42, 775, 1750), //192 193 == den 80, Ballimere Lake 12, W of SW ruins
+            new NestHashDetail(0xc862667fc72ee059, 0x72f9d87337338120, 42, 781, 1725), //190 191 == den 81, Ballimere Lake 13, N of SW ruins
+            new NestHashDetail(0xf6389ad0bc9aaeb, 0x277effbe0b116e4a, 42, 1080, 1720), //162 163 == den 82, Ballimere Lake 14, SE of Dyna Tree by land bridge
+            new NestHashDetail(0x17d327792698d15f, 0xb20a5ed251cd0456, 42, 945, 1745), //178 179 == den 83, Ballimere Lake 15, SW of Dyna Tree
+            new NestHashDetail(0x47a5d8b98dd573ab, 0xa23ec426e4e9430a, 42, 885, 1670), //182 183 == den 84, Ballimere Lake 16, W of Dyna Tree
+            new NestHashDetail(0x3d2f6b02fc6dd797, 0xf9d3242b837d627e, 42, 1080, 1620), //184 185 == den 85, Ballimere Lake 17, E of Dyna Tree, N of land bridge
+
+            new NestHashDetail(0x42b21efc37c7b974, 0x9d415f6a7a841dd9, 43, 993, 1714), //176 177 == den 86, Dyna Tree Hill 
         };
 
         internal static ulong getEventHash(RaidParameters raidParameters)

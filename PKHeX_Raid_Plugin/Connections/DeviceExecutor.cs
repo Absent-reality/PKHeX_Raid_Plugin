@@ -123,7 +123,6 @@ namespace PKHeX_Raid_Plugin.Connections
                 throw new Exception($"Game version is not supported. Expected version {VersionNumber}, and current game version is {version}.");
 
             return version;
-
         }
 
         public async Task<byte[]> GetBytes(BlockDefinition blockDefinition, CancellationToken token)

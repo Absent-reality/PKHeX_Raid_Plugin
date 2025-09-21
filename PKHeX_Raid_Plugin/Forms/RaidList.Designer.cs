@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             GB_Left = new System.Windows.Forms.GroupBox();
+            lbl_coordinates = new System.Windows.Forms.Label();
             btn_refresh = new System.Windows.Forms.Button();
             progressBar = new System.Windows.Forms.ProgressBar();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -61,7 +62,7 @@
             L_ShinyInFrames = new System.Windows.Forms.Label();
             L_HP = new System.Windows.Forms.Label();
             CHK_Event = new System.Windows.Forms.CheckBox();
-            button1 = new System.Windows.Forms.Button();
+            raid_calc_btn = new System.Windows.Forms.Button();
             TB_DEF_IV1 = new System.Windows.Forms.TextBox();
             PB_PK1 = new System.Windows.Forms.PictureBox();
             CHK_Rare = new System.Windows.Forms.CheckBox();
@@ -84,6 +85,7 @@
             // 
             // GB_Left
             // 
+            GB_Left.Controls.Add(lbl_coordinates);
             GB_Left.Controls.Add(btn_refresh);
             GB_Left.Controls.Add(progressBar);
             GB_Left.Controls.Add(groupBox1);
@@ -106,7 +108,7 @@
             GB_Left.Controls.Add(L_ShinyInFrames);
             GB_Left.Controls.Add(L_HP);
             GB_Left.Controls.Add(CHK_Event);
-            GB_Left.Controls.Add(button1);
+            GB_Left.Controls.Add(raid_calc_btn);
             GB_Left.Controls.Add(TB_DEF_IV1);
             GB_Left.Controls.Add(PB_PK1);
             GB_Left.Controls.Add(CHK_Rare);
@@ -124,6 +126,15 @@
             GB_Left.TabIndex = 0;
             GB_Left.TabStop = false;
             GB_Left.Text = "Den List";
+            // 
+            // lbl_coordinates
+            // 
+            lbl_coordinates.AutoSize = true;
+            lbl_coordinates.Location = new System.Drawing.Point(152, 102);
+            lbl_coordinates.Name = "lbl_coordinates";
+            lbl_coordinates.Size = new System.Drawing.Size(38, 15);
+            lbl_coordinates.TabIndex = 40;
+            lbl_coordinates.Text = "label7";
             // 
             // btn_refresh
             // 
@@ -345,7 +356,7 @@
             // L_Location
             // 
             L_Location.AutoSize = true;
-            L_Location.Location = new System.Drawing.Point(62, 61);
+            L_Location.Location = new System.Drawing.Point(45, 62);
             L_Location.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             L_Location.Name = "L_Location";
             L_Location.Size = new System.Drawing.Size(59, 15);
@@ -463,16 +474,16 @@
             CHK_Event.Text = "Event Pool";
             CHK_Event.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // raid_calc_btn
             // 
-            button1.Location = new System.Drawing.Point(30, 526);
-            button1.Margin = new System.Windows.Forms.Padding(2);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(215, 31);
-            button1.TabIndex = 8;
-            button1.Text = "Raid Calculator";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += ShowDenIVs;
+            raid_calc_btn.Location = new System.Drawing.Point(30, 526);
+            raid_calc_btn.Margin = new System.Windows.Forms.Padding(2);
+            raid_calc_btn.Name = "raid_calc_btn";
+            raid_calc_btn.Size = new System.Drawing.Size(215, 31);
+            raid_calc_btn.TabIndex = 8;
+            raid_calc_btn.Text = "Raid Calculator";
+            raid_calc_btn.UseVisualStyleBackColor = true;
+            raid_calc_btn.Click += ShowDenIVs;
             // 
             // TB_DEF_IV1
             // 
@@ -544,7 +555,7 @@
             // L_DenSeed
             // 
             L_DenSeed.AutoSize = true;
-            L_DenSeed.Location = new System.Drawing.Point(62, 81);
+            L_DenSeed.Location = new System.Drawing.Point(45, 82);
             L_DenSeed.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             L_DenSeed.Name = "L_DenSeed";
             L_DenSeed.Size = new System.Drawing.Size(38, 15);
@@ -556,10 +567,10 @@
             CB_Den.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             CB_Den.FormattingEnabled = true;
             CB_Den.Items.AddRange(new object[] { "1 [b]: Rolling Fields 1", "2 [b]: Rolling Fields 2", "3 [b]: Rolling Fields 3", "4 [b]: Rolling Fields 4", "5 [b]: Rolling Fields 5", "6 [b]: Rolling Fields 6", "7 [b]: Rolling Fields 7", "8 [b]: Rolling Fields 8", "9 [b]: Rolling Fields 9", "10 [b]: Dappled Grove 1", "11 [b]: Dappled Grove 2", "12 [b]: Dappled Grove 3", "13 [b]: Dappled Grove 4", "14 [b]: Dappled Grove 5", "15 [b]: Watchtower Ruins 1", "16 [b]: Watchtower Ruins 2", "17 [b]: Watchtower Ruins 3", "18 [b]: East Lake Axewell 1", "19 [b]: East Lake Axewell 2", "20 [b]: East Lake Axewell 3", "21 [b]: East Lake Axewell 4", "22 [b]: West Lake Axewell 1", "23 [b]: West Lake Axewell 2", "24 [b]: West Lake Axewell 3", "25 [b]: West Lake Axewell 4", "26 [b]: West Lake Axewell 5", "27 [b]: West Lake Axewell 6", "28 [b]: Axew’s Eye 1", "29 [b]: South Lake Miloch 1", "30 [b]: South Lake Miloch 2", "31 [b]: South Lake Miloch 3", "32 [b]: South Lake Miloch 4", "33 [b]: South Lake Miloch 5", "34 [b]: Giant’s Seat 1", "35 [b]: Giant’s Seat 2", "36 [b]: Giant’s Seat 3", "37 [b]: Giant’s Seat 4", "38 [b]: Giant’s Seat 5", "39 [b]: North Lake Miloch 1", "40 [b]: North Lake Miloch 2", "41 [b]: North Lake Miloch 3", "42 [b]: North Lake Miloch 4", "43 [b]: North Lake Miloch 5", "44 [b]: East Lake Axewell 5", "45 [b]: North Lake Miloch 6", "46 [b]: Motostoke Riverbank 1", "47 [b]: Motostoke Riverbank 2", "48 [b]: Motostoke Riverbank 3", "49 [b]: Motostoke Riverbank 4", "50 [b]: Bridge Field 1", "51 [b]: Bridge Field 2", "52 [b]: Bridge Field 3", "53 [b]: Bridge Field 4", "54 [b]: Bridge Field 5", "55 [b]: Bridge Field 6", "56 [b]: Bridge Field 7", "57 [b]: Bridge Field 8", "58 [b]: Bridge Field 9", "59 [b]: Stony Wilderness 1", "60 [b]: Stony Wilderness 2", "61 [b]: Stony Wilderness 3", "62 [b]: Stony Wilderness 4", "63 [b]: Stony Wilderness 5", "64 [b]: Stony Wilderness 6", "65 [b]: Stony Wilderness 7", "66 [b]: Stony Wilderness 8", "67 [b]: Stony Wilderness 9", "68 [b]: Stony Wilderness 10", "69 [b]: Stony Wilderness 11", "70 [b]: Stony Wilderness 12", "71 [b]: Dusty Bowl 1", "72 [b]: Dusty Bowl 2", "73 [b]: Dusty Bowl 3", "74 [b]: Dusty Bowl 4", "75 [b]: Dusty Bowl 5", "76 [b]: Dusty Bowl 6", "77 [b]: Dusty Bowl 7", "78 [b]: Dusty Bowl 8", "79 [b]: Giant’s Mirror 1", "80 [b]: Dusty Bowl 9", "81 [b]: Giant’s Mirror 2", "82 [b]: Giant’s Mirror 3", "83 [b]: Giant’s Mirror 4", "84 [b]: Giant’s Mirror 5", "85 [b]: Hammerlocke Hills 1", "86 [b]: Hammerlocke Hills 2", "87 [b]: Hammerlocke Hills 3", "88 [b]: Hammerlocke Hills 4", "89 [b]: Hammerlocke Hills 5", "90 [b]: Hammerlocke Hills 6", "91 [b]: Hammerlocke Hills 7", "92 [b]: Giant’s Cap 1", "93 [b]: Giant’s Cap 2", "94 [b]: Giant’s Cap 3", "95 [b]: Giant’s Cap 4", "96 [b]: Giant’s Cap 5", "97 [b]: Lake of Outrage 1", "98 [b]: Lake of Outrage 2", "99 [b]: Lake of Outrage 3", "100 [b]: Lake of Outrage 4", "1 [IoA]: Fields of Honor 1", "2 [IoA]: Fields of Honor 2", "3 [IoA]: Fields of Honor 3", "4 [IoA]: Fields of Honor 4", "5 [IoA]: Fields of Honor 5", "6 [IoA]: Fields of Honor 6", "7 [IoA]: Fields of Honor 7", "8 [IoA]: Fields of Honor 8", "9 [IoA]: Fields of Honor 9", "10 [IoA]: Fields of Honor 10", "11 [IoA]: Soothing Wetlands 1", "12 [IoA]: Soothing Wetlands 2", "13 [IoA]: Soothing Wetlands 3", "14 [IoA]: Soothing Wetlands 4", "15 [IoA]: Soothing Wetlands 5", "16 [IoA]: Soothing Wetlands 6", "17 [IoA]: Soothing Wetlands 7", "18 [IoA]: Soothing Wetlands 8", "19 [IoA]: Soothing Wetlands 9", "20 [IoA]: Forest of Focus 1", "21 [IoA]: Forest of Focus 2", "22 [IoA]: Forest of Focus 3", "23 [IoA]: Forest of Focus 4", "24 [IoA]: Forest of Focus 5", "25 [IoA]: Forest of Focus 6", "26 [IoA]: Challenge Beach 1", "27 [IoA]: Challenge Beach 2", "28 [IoA]: Challenge Beach 3", "29 [IoA]: Challenge Beach 4", "30 [IoA]: Challenge Beach 5", "31 [IoA]: Challenge Beach 6", "32 [IoA]: Challenge Beach 7", "33 [IoA]: Challenge Beach 8", "34 [IoA]: Brawlers’ Cave 1", "35 [IoA]: Challenge Road 1", "36 [IoA]: Challenge Road 2", "37 [IoA]: Challenge Road 3", "38 [IoA]: Challenge Road 4", "39 [IoA]: Courageous Cavern 1", "40 [IoA]: Courageous Cavern 2", "41 [IoA]: Courageous Cavern 3", "42 [IoA]: Courageous Cavern 4", "43 [IoA]: Courageous Cavern 5", "44 [IoA]: Courageous Cavern 6", "45 [IoA]: Loop Lagoon 1", "46 [IoA]: Loop Lagoon 2", "47 [IoA]: Loop Lagoon 3", "48 [IoA]: Loop Lagoon 4", "49 [IoA]: Training Lowlands 1", "50 [IoA]: Training Lowlands 2", "51 [IoA]: Training Lowlands 3", "52 [IoA]: Training Lowlands 4", "53 [IoA]: Training Lowlands 5", "54 [IoA]: Training Lowlands 6", "55 [IoA]: Training Lowlands 7", "56 [IoA]: Potbottom Desert 1", "57 [IoA]: Potbottom Desert 2", "58 [IoA]: Potbottom Desert 3", "59 [IoA]: Workout Sea 1", "60 [IoA]: Workout Sea 2", "61 [IoA]: Workout Sea 3", "62 [IoA]: Workout Sea 4", "63 [IoA]: Workout Sea 5", "64 [IoA]: Workout Sea 6", "65 [IoA]: Workout Sea 7", "66 [IoA]: Stepping-Stone Sea 1", "67 [IoA]: Stepping-Stone Sea 2", "68 [IoA]: Stepping-Stone Sea 3", "69 [IoA]: Stepping-Stone Sea 4", "70 [IoA]: Stepping-Stone Sea 5", "71 [IoA]: Stepping-Stone Sea 6", "72 [IoA]: Stepping-Stone Sea 7", "73 [IoA]: Stepping-Stone Sea 8", "74 [IoA]: Stepping-Stone Sea 9", "75 [IoA]: Insular Sea 1", "76 [IoA]: Insular Sea 2", "77 [IoA]: Insular Sea 3", "78 [IoA]: Insular Sea 4", "79 [IoA]: Insular Sea 5", "80 [IoA]: Honeycalm Sea 1", "81 [IoA]: Honeycalm Sea 2", "82 [IoA]: Honeycalm Sea 3", "83 [IoA]: Honeycalm Sea 4", "84 [IoA]: Honeycalm Sea 5", "85 [IoA]: Honeycalm Island 1", "86 [IoA]: Honeycalm Island 2", "87 [IoA]: Honeycalm Island 3", "88 [IoA]: Honeycalm Island 4", "89 [IoA]: Honeycalm Island 5", "90 [IoA]: Honeycalm Island 6", "1 [CT]: Slippery Slope 1", "2 [CT]: Slippery Slope 2", "3 [CT]: Slippery Slope 3", "4 [CT]: Slippery Slope 4", "5 [CT]: Slippery Slope 5", "6 [CT]: Slippery Slope 6", "7 [CT]: Frostpoint Field 1", "8 [CT]: Frostpoint Field 2", "9 [CT]: Frostpoint Field 3", "10 [CT]: Frostpoint Field 4", "11 [CT]: Frostpoint Field 5", "12 [CT]: Giant’s Bed 1", "13 [CT]: Giant’s Bed 2", "14 [CT]: Giant’s Bed 3", "15 [CT]: Giant’s Bed 4", "16 [CT]: Giant’s Bed 5", "17 [CT]: Giant’s Bed 6", "18 [CT]: Giant’s Bed 7", "19 [CT]: Giant’s Bed 8", "20 [CT]: Giant’s Bed 9", "21 [CT]: Giant’s Bed 10", "22 [CT]: Giant’s Bed 11", "23 [CT]: Giant’s Bed 12", "24 [CT]: Giant’s Bed 13", "25 [CT]: Giant’s Bed 14", "26 [CT]: Giant’s Bed 15", "27 [CT]: Giant’s Bed 16", "28 [CT]: Giant’s Bed 17", "29 [CT]: Giant’s Bed 18", "30 [CT]: Giant’s Bed 19", "31 [CT]: Giant’s Bed 20", "32 [CT]: Giant’s Bed 21", "33 [CT]: Old Cemetery 1", "34 [CT]: Old Cemetery 2", "35 [CT]: Snowslide Slope 1", "36 [CT]: Snowslide Slope 2", "37 [CT]: Snowslide Slope 3", "38 [CT]: Snowslide Slope 4", "39 [CT]: Snowslide Slope 5", "40 [CT]: Snowslide Slope 6", "41 [CT]: Snowslide Slope 7", "42 [CT]: Snowslide Slope 8", "43 [CT]: Snowslide Slope 9", "44 [CT]: Path to the Peak 1", "45 [CT]: Path to the Peak 2", "46 [CT]: Path to the Peak 3", "47 [CT]: Crown Shrine 1", "48 [CT]: Giant’s Foot 1", "49 [CT]: Giant’s Foot 2", "50 [CT]: Giant’s Foot 3", "51 [CT]: Giant’s Foot 4", "52 [CT]: Giant’s Foot 5", "53 [CT]: Frigid Sea 1", "54 [CT]: Frigid Sea 2", "55 [CT]: Frigid Sea 3", "56 [CT]: Frigid Sea 4", "57 [CT]: Frigid Sea 5", "58 [CT]: Frigid Sea 6", "59 [CT]: Frigid Sea 7", "60 [CT]: Frigid Sea 8", "61 [CT]: Frigid Sea 9", "62 [CT]: Frigid Sea 10", "63 [CT]: Frigid Sea 11", "64 [CT]: Frigid Sea 12", "65 [CT]: Frigid Sea 13", "66 [CT]: Frigid Sea 14", "67 [CT]: Three-Point Pass 1", "68 [CT]: Three-Point Pass 2", "69 [CT]: Ballimere Lake 1", "70 [CT]: Ballimere Lake 2", "71 [CT]: Ballimere Lake 3", "72 [CT]: Ballimere Lake 4", "73 [CT]: Ballimere Lake 5", "74 [CT]: Ballimere Lake 6", "75 [CT]: Ballimere Lake 7", "76 [CT]: Ballimere Lake 8", "77 [CT]: Ballimere Lake 9", "78 [CT]: Ballimere Lake 10", "79 [CT]: Ballimere Lake 11", "80 [CT]: Ballimere Lake 12", "81 [CT]: Ballimere Lake 13", "82 [CT]: Ballimere Lake 14", "83 [CT]: Ballimere Lake 15", "84 [CT]: Ballimere Lake 16", "85 [CT]: Ballimere Lake 17", "86 [CT]: Dyna Tree Hill 1" });
-            CB_Den.Location = new System.Drawing.Point(65, 32);
+            CB_Den.Location = new System.Drawing.Point(45, 32);
             CB_Den.Margin = new System.Windows.Forms.Padding(2);
             CB_Den.Name = "CB_Den";
-            CB_Den.Size = new System.Drawing.Size(160, 23);
+            CB_Den.Size = new System.Drawing.Size(200, 23);
             CB_Den.TabIndex = 0;
             CB_Den.SelectedIndexChanged += ChangeDenIndex;
             // 
@@ -567,6 +578,7 @@
             // 
             splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            splitContainer1.IsSplitterFixed = true;
             splitContainer1.Location = new System.Drawing.Point(2, 2);
             splitContainer1.Name = "splitContainer1";
             // 
@@ -596,6 +608,7 @@
             DenMap.TabIndex = 0;
             DenMap.TabStop = false;
             DenMap.BackgroundImageChanged += DenMap_BackgroundImageChanged;
+            DenMap.Paint += DenMap_Paint;
             // 
             // RaidList
             // 
@@ -649,7 +662,7 @@
         private System.Windows.Forms.TextBox TB_ATK_IV1;
         private System.Windows.Forms.TextBox TB_SPA_IV1;
         private System.Windows.Forms.TextBox TB_HP_IV1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button raid_calc_btn;
         private System.Windows.Forms.CheckBox CHK_Event;
         private System.Windows.Forms.Label L_Ability;
         private System.Windows.Forms.Label L_Nature;
@@ -675,5 +688,6 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button btn_refresh;
         private System.Windows.Forms.Label lbl_memo;
+        private System.Windows.Forms.Label lbl_coordinates;
     }
 }

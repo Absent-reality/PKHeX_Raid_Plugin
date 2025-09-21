@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static PKHeX_Raid_Plugin.MapRegion;
 
 namespace PKHeX_Raid_Plugin
 {
@@ -25,6 +26,8 @@ namespace PKHeX_Raid_Plugin
         private List<RaidParameters> _baseRaids = [];
         private List<RaidParameters> _ctRaids = [];
         private List<RaidParameters> _aotRaids = [];
+        private List<MapRegion.Region> _currentRegions = [];
+        private Label HoverLabel;
         private MessageAnnouncer _announcer;
         private string Ip = "";
         private int Port = 6000;
@@ -60,6 +63,7 @@ namespace PKHeX_Raid_Plugin
                 {
                     _isConnecting = value;
                     OnPropertyChanged();
+                    UpdateControlStates();
                 }
             }
         }
@@ -87,6 +91,38 @@ namespace PKHeX_Raid_Plugin
             _SAV = sav;
             CenterToParent();
             UpdateRaids(sav);
+        }
+
+        private int _originalHeight;
+        private bool _isResizing = false;
+        private bool _isLoaded = false;
+
+        private void RaidList_Load(object sender, EventArgs e)
+        {
+            _isLoaded = true;
+            _originalHeight = this.Height;
+            _announcer = new MessageAnnouncer();
+
+            CB_Den.DrawMode = DrawMode.OwnerDrawFixed;
+            CB_Den.DrawItem -= CB_Den_DrawItem;
+            CB_Den.DrawItem += CB_Den_DrawItem;
+            this.PropertyChanged += OnPropertyChange;
+            DenMap.MouseMove += DenMap_MouseMove;
+            tb_ip.Text = Plugin_Settings.Default.address;
+            tb_port.Text = Plugin_Settings.Default.port.ToString();
+            protocolSwitch.State = Plugin_Settings.Default.protocol
+                ? SwitchControl.SwitchState.Right
+                : SwitchControl.SwitchState.Left;
+
+            InitializeBindings();
+        }
+
+        private void InitializeBindings()
+        {
+            lbl_memo.DataBindings.Add("Text", _announcer, "Message");
+            btn_refresh.DataBindings.Add("Visible", this, "Connected");
+            progressBar.DataBindings.Add("Value", this, "ProgressValue", true, DataSourceUpdateMode.OnPropertyChanged);            
+            lbl_coordinates.DataBindings.Add("Text", this, "MouseCoordinatesText", true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         public void UpdateRaids(SAV8SWSH sav)
@@ -191,15 +227,18 @@ namespace PKHeX_Raid_Plugin
                 case >= 190:
                     baseMap = Resources.map_ct;
                     raids = _ctRaids;
+                    _currentRegions = MapRegions.GetMapRegions(selectedRaid.Index);
                     break;
 
                 case >= 100:
-                    baseMap = Resources.map_ioa;
+                    baseMap = Resources.map_ioa;                  
                     raids = _aotRaids;
+                    _currentRegions = MapRegions.GetMapRegions(selectedRaid.Index);
                     break;
 
                 case < 100:
                     raids = _baseRaids;
+                    _currentRegions = MapRegions.GetMapRegions(selectedRaid.Index);
                     break;
             }
 
@@ -222,13 +261,19 @@ namespace PKHeX_Raid_Plugin
         {
             using var graphics = Graphics.FromImage(map);
 
-            foreach (var raidParameters in raids)
+            foreach (var raid in raids)
             {
-                if (raidParameters.IsWishingPiece)
-                    DrawOverlay(graphics, Resources.wishingpiece, raidParameters, 40, 40, 21, -21);
+                bool isLarge = raid.Index >= 190;
 
-                if (_raids.GenerateFromIndex(raidParameters).ShinyType != 0)
-                    DrawOverlay(graphics, Resources.shiny, raidParameters, 40, 40, -21, -21);
+                if (raid.IsWishingPiece)
+                    DrawOverlay(graphics, Resources.wishingpiece, raid,
+                        isLarge ? 60 : 40, isLarge ? 60 : 40,
+                        isLarge ? 31 : 21, isLarge ? -31 : -21);
+
+                if (_raids.GenerateFromIndex(raid).ShinyType != 0)
+                    DrawOverlay(graphics, Resources.shiny, raid,
+                        isLarge ? 60 : 40, isLarge ? 60 : 40,
+                        isLarge ? -31 : -21, isLarge ? -31 : -21);
             }
 
             return map;
@@ -277,37 +322,130 @@ namespace PKHeX_Raid_Plugin
                 this.Size = adjustedSize;
         }
 
-        private int _originalHeight;
-        private bool _isResizing = false;
-        private bool _isLoaded = false;
-
-        private void RaidList_Load(object sender, EventArgs e)
+        private void DenMap_MouseMove(object? sender, MouseEventArgs e)
         {
-            _isLoaded = true;
-            _originalHeight = this.Height;
-            _announcer = new MessageAnnouncer();
+            if (DenMap.BackgroundImage == null)
+                return;
 
-            CB_Den.DrawMode = DrawMode.OwnerDrawFixed;
-            CB_Den.DrawItem -= CB_Den_DrawItem;
-            CB_Den.DrawItem += CB_Den_DrawItem;
-            this.PropertyChanged += OnPropertyChange;
-            tb_ip.Text = Plugin_Settings.Default.address;
-            tb_port.Text = Plugin_Settings.Default.port.ToString();
-            protocolSwitch.State = Plugin_Settings.Default.protocol
-                ? SwitchControl.SwitchState.Right
-                : SwitchControl.SwitchState.Left;
-            InitializeBindings();
+            var img = DenMap.BackgroundImage;
+            var pbSize = DenMap.ClientSize;
+
+            float scaleX = (float)img.Width / pbSize.Width;
+            float scaleY = (float)img.Height / pbSize.Height;
+
+            int imgX = (int)(e.X * scaleX);
+            int imgY = (int)(e.Y * scaleY);
+
+            MousePoint = new Point(imgX, imgY);
+            HoverPoint = new Point(e.X, e.Y);
+
+            DenMap.Invalidate();
         }
 
-        private void InitializeBindings()
+        private Point _mousePoint = Point.Empty;
+
+        [DefaultValue(typeof(Point), "0,0")]
+        public Point MousePoint
         {
-            lbl_memo.DataBindings.Add("Text", _announcer, "Message");
-            btn_refresh.DataBindings.Add("Visible", this, "Connected");
-            var binding = new Binding("Enabled", this, "IsConnecting", true, DataSourceUpdateMode.OnPropertyChanged);
-            binding.Format += (s, e) => e.Value = !(bool?)e.Value;
-            binding.Parse += (s, e) => e.Value = !(bool?)e.Value;
-            Cnct_btn.DataBindings.Add(binding);
-            progressBar.DataBindings.Add("Value", this, "ProgressValue", true, DataSourceUpdateMode.OnPropertyChanged);
+            get => _mousePoint;
+            set
+            {
+                if (_mousePoint != value)
+                {
+                    _mousePoint = value;
+                    OnPropertyChanged(nameof(MousePoint));
+                    OnPropertyChanged(nameof(MouseCoordinatesText));
+                }
+            }
+        }
+
+        private Point _hoverPoint = Point.Empty;
+
+        [DefaultValue(typeof(Point), "0,0")]
+        public Point HoverPoint
+        {
+            get => _hoverPoint;
+            set
+            {
+                if (_hoverPoint != value)
+                {
+                    _hoverPoint = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string MouseCoordinatesText => $"{DenMap.ClientSize.Width}, {HoverPoint.X}"; //$"X: {_mousePoint.X}, Y: {_mousePoint.Y}";
+
+        private float _distance = 0;
+        [DefaultValue(0)]
+        public float Distance
+        {
+            get => _distance;
+            set
+            {
+                if (_distance != value)
+                {
+                    _distance = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private void DenMap_Paint(object? sender, PaintEventArgs e)
+        {         
+            if (_currentRegions == null || _currentRegions.Count == 0)
+                return;
+
+            var hoveredRegion = _currentRegions
+                .Where(r => r.Contains(MousePoint))
+                .OrderBy(r => r.Type)
+                .FirstOrDefault();
+
+            if (hoveredRegion == null || DenMap.BackgroundImage == null) return;
+
+            string name = hoveredRegion.Name;
+            var img = DenMap.BackgroundImage;
+
+            if (img == null) return;
+            var pbSize = DenMap.ClientSize;
+            float scaleX = (float)pbSize.Width / img.Width;
+            float scaleY = (float)pbSize.Height / img.Height;
+            PointF[] scaledBoundary = [.. hoveredRegion.Boundary.Select(p => new PointF(p.X * scaleX, p.Y * scaleY))];
+            using Pen outlinePen = new(Color.Gray, 2);
+            e.Graphics.DrawPolygon(outlinePen, scaledBoundary);
+
+            using Font font = new("Segoe UI", 10, FontStyle.Bold);
+            SizeF textSize = e.Graphics.MeasureString(name, font);
+
+            float locationX = HoverPoint.X + 10;
+            float locationY = HoverPoint.Y + 10;
+
+            if (HoverPoint.X >= DenMap.ClientSize.Width - textSize.Width)            
+                   locationX = HoverPoint.X - textSize.Width;
+            if (HoverPoint.Y >= DenMap.ClientSize.Height - textSize.Height)
+                locationY = HoverPoint.Y - textSize.Height;
+
+            e.Graphics.DrawString(name, font, Brushes.Black, new PointF(locationX, locationY));
+        }
+
+        private void UpdateControlStates()
+        {
+            bool enabled = !IsConnecting;
+            SetEnabledRecursive(this, enabled);
+        }
+
+        private void SetEnabledRecursive(Control parent, bool enabled)
+        {
+            foreach (Control c in parent.Controls)
+            {
+                if (c is Button or ComboBox or TextBox or CheckBox or IPTextBox or SwitchControl)
+                    c.Enabled = enabled;
+
+                // Recurse into child containers
+                if (c.HasChildren)
+                    SetEnabledRecursive(c, enabled);
+            }       
         }
 
         private void RaidList_Resize(object sender, EventArgs e)

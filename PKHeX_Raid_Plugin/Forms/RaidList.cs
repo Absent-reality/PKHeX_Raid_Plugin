@@ -27,7 +27,6 @@ namespace PKHeX_Raid_Plugin
         private List<RaidParameters> _ctRaids = [];
         private List<RaidParameters> _aotRaids = [];
         private List<MapRegion.Region> _currentRegions = [];
-        private Label HoverLabel;
         private MessageAnnouncer _announcer;
         private string Ip = "";
         private int Port = 6000;
@@ -375,22 +374,7 @@ namespace PKHeX_Raid_Plugin
             }
         }
 
-        public string MouseCoordinatesText => $"{DenMap.ClientSize.Width}, {HoverPoint.X}"; //$"X: {_mousePoint.X}, Y: {_mousePoint.Y}";
-
-        private float _distance = 0;
-        [DefaultValue(0)]
-        public float Distance
-        {
-            get => _distance;
-            set
-            {
-                if (_distance != value)
-                {
-                    _distance = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public string MouseCoordinatesText => $"X: {_mousePoint.X}, Y: {_mousePoint.Y}";
 
         private void DenMap_Paint(object? sender, PaintEventArgs e)
         {         

@@ -5,7 +5,8 @@ namespace PKHeX_Raid_Plugin
     public class RaidParameters
     {
         private static readonly string[] LocationNames =
-        {
+        [
+            //Base Galar:
             "Axew's Eye",
             "Bridge Field",
             "Dappled Grove",
@@ -23,7 +24,8 @@ namespace PKHeX_Raid_Plugin
             "Stony Wilderness",
             "Watchtower Ruins",
             "West Lake Axewell",
-            //
+
+            //Island of Armor:
             "Fields of Honor",
             "Soothing Wetlands",
             "Forest of Focus",
@@ -33,13 +35,14 @@ namespace PKHeX_Raid_Plugin
             "Courageous Cavern",
             "Loop Lagoon",
             "Training Lowlands",
-            //"Warm-Up Tunnel",
             "Potbottom Desert",
             "Workout Sea",
             "Stepping-Stone Sea",
             "Insular Sea",
             "Honeycalm Sea",
             "Honeycalm Island",
+
+            //Crown Tundra:
             "Slippery Slope",
             "Frostpoint Field",
             "Giant’s Bed",
@@ -52,7 +55,7 @@ namespace PKHeX_Raid_Plugin
             "Three-Point Pass",
             "Ballimere Lake",
             "Dyna Tree Hill"
-        };
+        ];
 
         public readonly int Flags;
         public readonly RaidType Type;

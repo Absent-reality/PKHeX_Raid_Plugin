@@ -7,25 +7,25 @@ namespace PKHeX_Raid_Plugin
         private static readonly string[] LocationNames =
         [
             //Base Galar:
-            "Axew's Eye",
-            "Bridge Field",
-            "Dappled Grove",
-            "Dusty Bowl",
-            "East Lake Axewell",
-            "Giant's Cap",
-            "Giant's Mirror",
-            "Giant's Seat",
-            "Hammerlocke Hills",
-            "Lake of Outrage",
-            "Motostoke Riverbank",
-            "North Lake Miloch",
-            "Rolling Fields",
-            "South Lake Miloch",
-            "Stony Wilderness",
-            "Watchtower Ruins",
-            "West Lake Axewell",
+            "Axew's Eye",               //0
+            "Bridge Field",             //1
+            "Dappled Grove",            //2
+            "Dusty Bowl",               //3
+            "East Lake Axewell",        //4
+            "Giant's Cap",              //5
+            "Giant's Mirror",           //6
+            "Giant's Seat",             //7
+            "Hammerlocke Hills",        //8
+            "Lake of Outrage",          //9
+            "Motostoke Riverbank",      //10
+            "North Lake Miloch",        //11
+            "Rolling Fields",           //12
+            "South Lake Miloch",        //13
+            "Stony Wilderness",         //14
+            "Watchtower Ruins",         //15
+            "West Lake Axewell",        //16
 
-            //Island of Armor:
+            //Isle of Armor:
             "Fields of Honor",
             "Soothing Wetlands",
             "Forest of Focus",
@@ -72,11 +72,31 @@ namespace PKHeX_Raid_Plugin
         public readonly int X;
         public readonly int Y;
         public readonly string Location;
+        public readonly RaidRegion Region;
 
-        public RaidParameters(int index, RaidSpawnDetail detail, int location, int x, int y)
-            : this(index, detail.Seed, detail.Stars, detail.RandRoll, detail.Flags, detail.DenType, location, x, y) { }
+        public override string ToString()
+        {
+            int raidNumber = Region switch
+            {
+                RaidRegion.CrownTundra => Index - 190,
+                RaidRegion.IsleOfArmor => Index - 100,
+                _ => Index
+            };
 
-        public RaidParameters(int index, ulong seed, int stars, int randRoll, int flags, RaidType type, int location, int x, int y)
+            string regionName = Region switch
+            {
+                RaidRegion.CrownTundra => "Crown Tundra",
+                RaidRegion.IsleOfArmor => "Isle of Armor",
+                _ => "Base Game"
+            };
+
+            return $"{raidNumber}: - ({regionName}) {Location}";
+        }
+
+        public RaidParameters(int index, RaidSpawnDetail detail, int location, int x, int y, RaidRegion region)
+            : this(index, detail.Seed, detail.Stars, detail.RandRoll, detail.Flags, detail.DenType, location, x, y, region) { }
+
+        public RaidParameters(int index, ulong seed, int stars, int randRoll, int flags, RaidType type, int location, int x, int y, RaidRegion region)
         {
             Seed = seed;
             Flags = flags;
@@ -93,6 +113,7 @@ namespace PKHeX_Raid_Plugin
             Location = LocationNames[location];
             X = x;
             Y = y;
+            Region = region;
         }
     }
 }

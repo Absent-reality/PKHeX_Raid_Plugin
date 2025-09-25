@@ -14,7 +14,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static PKHeX_Raid_Plugin.MapRegion;
+using static PKHeX_Raid_Plugin.MapRegions;
+using static PKHeX_Raid_Plugin.RaidRegions;
 
 namespace PKHeX_Raid_Plugin
 {
@@ -22,7 +23,6 @@ namespace PKHeX_Raid_Plugin
     {
         private RaidManager _raids;
         private readonly TextBox[] IVs;
-        private List<RaidPKM> _pkms = [];
         private List<RaidParameters> _baseRaids = [];
         private List<RaidParameters> _ctRaids = [];
         private List<RaidParameters> _aotRaids = [];
@@ -127,17 +127,28 @@ namespace PKHeX_Raid_Plugin
         public void UpdateRaids(SAV8SWSH sav)
         {
             _raids = new RaidManager(sav.Blocks, sav.Version, sav.Badges, (uint)sav.TID16, (uint)sav.SID16);
+            var list = _raids.DenList.OrderBy(r => r.Location).ToList();
+            CB_Den.DataSource = list;
             CB_Den.SelectedIndex = 0;
-            GetAllDens();
-            LoadDen(_raids[0]);
+            GetAllDens(list);
+
+            if (CB_Den.SelectedItem is RaidParameters raid)
+            LoadDen(raid);
         }
 
-        private void ChangeDenIndex(object sender, EventArgs e) => LoadDen(_raids[CB_Den.SelectedIndex]);
+        private void ChangeDenIndex(object sender, EventArgs e)
+        {
+            if (CB_Den.SelectedItem is RaidParameters raid)
+                LoadDen(raid);
+        }
 
         private void ShowDenIVs(object sender, EventArgs e)
         {
-            using var divs = new DenIVs(CB_Den.SelectedIndex, _raids);
-            divs.ShowDialog();
+            if (CB_Den.SelectedItem is RaidParameters raid)
+            {
+                using var divs = new DenIVs(raid.Index, _raids);
+                divs.ShowDialog();
+            }
         }
 
         private void LoadDen(RaidParameters raidParameters)
@@ -149,8 +160,9 @@ namespace PKHeX_Raid_Plugin
             CHK_Watts.Checked = raidParameters.WattsHarvested;
             L_DenSeed.Text = $"{raidParameters.Seed:X16}";
             L_Stars.Text = RaidUtil.GetStarString(raidParameters);
-
+           
             var pkm = _raids.GenerateFromIndex(raidParameters);
+            
             var s = GameInfo.Strings;
             L_Ability.Text = $"Ability: {s.Ability[pkm.Ability]}";
             L_Nature.Text = $"Nature: {s.natures[pkm.Nature]}";
@@ -167,24 +179,14 @@ namespace PKHeX_Raid_Plugin
             L_Location.Text = raidParameters.Location;
 
             if (raidParameters.X > 0 && raidParameters.Y > 0)
-                UpdateBackground(raidParameters);
+                UpdateBackground(raidParameters); 
         }
 
-        private void GetAllDens()
+        private void GetAllDens(List<RaidParameters> currentRaids)
         {
-            List<RaidParameters> currentRaids = [];
-            _pkms.Clear();
-
-            for (int i = 0; i < CB_Den.Items.Count; i++)
-            {
-                var raid = _raids[i];
-                _pkms.Add(_raids.GenerateFromIndex(raid));
-                currentRaids.Add(raid);
-            }
-
-            _baseRaids = [.. currentRaids.Where(r => r.Index < 100)];
-            _ctRaids = [.. currentRaids.Where(r => r.Index >= 190)];
-            _aotRaids = [.. currentRaids.Where(r => r.Index >= 100 && r.Index < 190)];
+            _baseRaids = [.. currentRaids.Where(r => r.Region == RaidRegion.Base)];
+            _ctRaids = [.. currentRaids.Where(r => r.Region == RaidRegion.CrownTundra)];
+            _aotRaids = [.. currentRaids.Where(r => r.Region == RaidRegion.IsleOfArmor)];
         }
 
         private void CB_Den_DrawItem(object? sender, DrawItemEventArgs e)
@@ -192,14 +194,19 @@ namespace PKHeX_Raid_Plugin
             if (e.Index < 0) return;
 
             if (sender is not ComboBox combo) return;
+
             var item = combo.Items[e.Index];
             if (item == null) return;
+
+            var raid = item as RaidParameters;
+            if (raid == null) return;
+
             var itemText = item.ToString();
             var itemFont = e.Font ?? SystemFonts.DefaultFont;
 
             Color foreColor = Color.Black;
-            var raid = _raids[e.Index];
-            var pkm = _pkms[e.Index];
+
+            var pkm = _raids.GenerateFromIndex(raid);
 
             if (raid.IsWishingPiece || pkm.ShinyType != 0)
                 itemFont = new(itemFont, FontStyle.Bold);
@@ -221,23 +228,23 @@ namespace PKHeX_Raid_Plugin
             List<RaidParameters> raids = [];
             Bitmap baseMap = Resources.map;
 
-            switch (selectedRaid.Index)
+            switch (GetRegion(selectedRaid.Index))
             {
-                case >= 190:
+                case RaidRegion.CrownTundra:
                     baseMap = Resources.map_ct;
                     raids = _ctRaids;
-                    _currentRegions = MapRegions.GetMapRegions(selectedRaid.Index);
+                    _currentRegions = GetMapRegions(RaidRegion.CrownTundra);
                     break;
 
-                case >= 100:
+                case RaidRegion.IsleOfArmor:
                     baseMap = Resources.map_ioa;                  
                     raids = _aotRaids;
-                    _currentRegions = MapRegions.GetMapRegions(selectedRaid.Index);
+                    _currentRegions = GetMapRegions(RaidRegion.IsleOfArmor);
                     break;
 
-                case < 100:
+                case RaidRegion.Base:
                     raids = _baseRaids;
-                    _currentRegions = MapRegions.GetMapRegions(selectedRaid.Index);
+                    _currentRegions = GetMapRegions(RaidRegion.Base);
                     break;
             }
 
@@ -245,7 +252,7 @@ namespace PKHeX_Raid_Plugin
             Pen redPen = new(Color.Red, 10);
             using var graphics = Graphics.FromImage(mapWithMarks);
 
-            if (selectedRaid.Index >= 190)
+            if (selectedRaid.Region == RaidRegion.CrownTundra)
             {
                 redPen = new(Color.Red, 20);
                 graphics.DrawArc(redPen, selectedRaid.X - 10, selectedRaid.Y - 10, 25, 25, 0, 360);
@@ -262,7 +269,7 @@ namespace PKHeX_Raid_Plugin
 
             foreach (var raid in raids)
             {
-                bool isLarge = raid.Index >= 190;
+                bool isLarge = raid.Region == RaidRegion.CrownTundra;
 
                 if (raid.IsWishingPiece)
                     DrawOverlay(graphics, Resources.wishingpiece, raid,
@@ -426,7 +433,6 @@ namespace PKHeX_Raid_Plugin
                 if (c is Button or ComboBox or TextBox or CheckBox or IPTextBox or SwitchControl)
                     c.Enabled = enabled;
 
-                // Recurse into child containers
                 if (c.HasChildren)
                     SetEnabledRecursive(c, enabled);
             }       
@@ -471,7 +477,6 @@ namespace PKHeX_Raid_Plugin
 
         private void Tb_port_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Allow control keys (backspace, delete, etc.)
             if (char.IsControl(e.KeyChar))
             {
                 base.OnKeyPress(e);

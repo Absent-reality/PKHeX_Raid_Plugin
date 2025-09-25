@@ -129,7 +129,7 @@ namespace PKHeX_Raid_Plugin
             new NestHashDetail(0x17428c56dc611941, 0xba805d67100fd5aa, 09, 161, 080), //08 44
             new NestHashDetail(0x17458656dc6344e6, 0xba8a4f6710181265, 09, 143, 039), //34 74
 
-//                                        Island of Armor
+//                                        Isle of Armor
 //              ------------------------------------------------------------------
 
 //  Fields of Honor:

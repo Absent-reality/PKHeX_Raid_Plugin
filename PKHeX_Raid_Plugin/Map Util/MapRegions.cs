@@ -12,13 +12,14 @@ namespace PKHeX_Raid_Plugin
         private static PointF[] ToPoints(params (double x, double y)[] tuples) =>
             [.. tuples.Select(t => new PointF((float)t.x, (float)t.y))];
 
-        public static List<MapRegion.Region> GetMapRegions(int mapIndex)
+        public static List<MapRegion.Region> GetMapRegions(RaidRegion region)
         {
-            return mapIndex switch
+            return region switch
             {
-                 < 100 => BaseMap.AllRegions,
-                >= 190 => CrownTundra.AllRegions,
-                _      => IsleOfArmor.AllRegions
+                RaidRegion.Base => BaseMap.AllRegions,
+                RaidRegion.CrownTundra => CrownTundra.AllRegions,
+                RaidRegion.IsleOfArmor => IsleOfArmor.AllRegions,
+                _ => []
             };
         }
 

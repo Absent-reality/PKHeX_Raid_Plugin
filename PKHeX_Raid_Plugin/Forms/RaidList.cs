@@ -127,7 +127,7 @@ namespace PKHeX_Raid_Plugin
         public void UpdateRaids(SAV8SWSH sav)
         {
             _raids = new RaidManager(sav.Blocks, sav.Version, sav.Badges, (uint)sav.TID16, (uint)sav.SID16);
-            var list = _raids.DenList.OrderBy(r => r.Location).ToList();
+            var list = _raids.DenList.OrderBy(r => r.Index).ToList();
             CB_Den.DataSource = list;
             CB_Den.SelectedIndex = 0;
             GetAllDens(list);

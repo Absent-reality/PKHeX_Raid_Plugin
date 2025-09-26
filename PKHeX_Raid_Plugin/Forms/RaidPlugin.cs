@@ -129,8 +129,8 @@ namespace PKHeX_Raid_Plugin
 
             ToolStripMenuItem[] subItems =
             [
-               Raid = new ("Display Raids") { Name = "Item_Raid", Visible = false },
-               seedFinder = new ("Raid Seed Finder") { Name = "Item_SeedFinder" }
+               Raid = new ("Display Raids") { Name = "Item_Raid", Visible = false, Image = Properties.Resources.display_map},
+               seedFinder = new ("Raid Seed Finder") { Name = "Item_SeedFinder", Image = Properties.Resources.seeds }
             ];
 
             Raid.Click += (s, e) => Open();

@@ -97,13 +97,16 @@ namespace PKHeX_Raid_Plugin
             if (raidParameters.IsCrystal)
             {
                 var tables = _raidTables.CrytalNestsEvent;
-                var nest = Array.Find(tables, table => table.TableID == 0);
+                var nest = Array.Find(tables, table => table.TableID == 0)
+                     ?? throw new InvalidOperationException("Nest not found.");
+
                 return nest.Entries.AsEnumerable();
             }
             if (raidParameters.IsEvent)
             {
                 var tables = Game == GameVersion.SW ? _raidTables.SwordNestsEvent : _raidTables.ShieldNestsEvent;
-                var nest = Array.Find(tables, table => table.TableID == NestLocations.EventHash);
+                var nest = Array.Find(tables, table => table.TableID == NestLocations.EventHash)
+                    ?? throw new InvalidOperationException("Event nest not found.");
                 return nest.Entries.Where(table => table.CanObtainWith(stars));
             }
             else
@@ -112,7 +115,10 @@ namespace PKHeX_Raid_Plugin
                 var tables = Game == GameVersion.SW ? _raidTables.SwordNests : _raidTables.ShieldNests;
                 var common = Array.Find(tables, table => table.TableID == detail.CommonHash);
                 var rare = Array.Find(tables, table => table.TableID == detail.RareHash);
-                return common.Entries.Where(table => table.CanObtainWith(stars)).Union(rare.Entries.Where(table => table.CanObtainWith(stars)));
+                var commonEntries = common?.Entries?.Where(table => table.CanObtainWith(stars)) ?? [];
+                var rareEntries = rare?.Entries?.Where(table => table.CanObtainWith(stars)) ?? [];
+
+                return commonEntries.Union(rareEntries);
             }
         }
     }

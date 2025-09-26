@@ -28,6 +28,8 @@ namespace PKHeX_Raid_Plugin
 
         public static readonly NestHashDetail[] Nests =
         {
+            //Base raids: Blame Game Freak as to why the locations bounce around,
+            //   as this is the order from the raid block..
             new NestHashDetail(0x173f0456dc5dfc52, 0xba83e1671012ebcd, 12, 185, 977), //16 52
             new NestHashDetail(0x17458556dc634333, 0xba8745671015cb90, 12, 125,1005), //37 64
             new NestHashDetail(0x17458b56dc634d65, 0x450421d99cf882c1, 12, 114, 936), //31 90

@@ -121,6 +121,9 @@
   <data name="den_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\den_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="display_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\display_map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="dyna" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dyna.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -135,6 +138,9 @@
   </data>
   <data name="no_shiny" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\no_shiny.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="seeds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\seeds.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shiny" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shiny.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

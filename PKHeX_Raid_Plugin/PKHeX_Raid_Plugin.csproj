@@ -12,6 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\display.png" />
+    <None Remove="Resources\display_pin.png" />
+    <None Remove="Resources\display_raids.png" />
+    <None Remove="Resources\display_route.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 

@@ -73,6 +73,16 @@ namespace PKHeX_Raid_Plugin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap display_map {
+            get {
+                object obj = ResourceManager.GetObject("display_map", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dyna {
             get {
                 object obj = ResourceManager.GetObject("dyna", resourceCulture);
@@ -116,6 +126,16 @@ namespace PKHeX_Raid_Plugin.Properties {
         internal static System.Drawing.Bitmap no_shiny {
             get {
                 object obj = ResourceManager.GetObject("no_shiny", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap seeds {
+            get {
+                object obj = ResourceManager.GetObject("seeds", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

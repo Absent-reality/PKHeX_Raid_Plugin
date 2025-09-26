@@ -569,7 +569,7 @@
             CB_Den.Location = new System.Drawing.Point(45, 32);
             CB_Den.Margin = new System.Windows.Forms.Padding(2);
             CB_Den.Name = "CB_Den";
-            CB_Den.Size = new System.Drawing.Size(200, 23);
+            CB_Den.Size = new System.Drawing.Size(221, 23);
             CB_Den.TabIndex = 0;
             CB_Den.SelectedIndexChanged += ChangeDenIndex;
             // 

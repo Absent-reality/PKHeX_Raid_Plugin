@@ -78,19 +78,19 @@ namespace PKHeX_Raid_Plugin
         {
             int raidNumber = Region switch
             {
-                RaidRegion.CrownTundra => Index - 190,
-                RaidRegion.IsleOfArmor => Index - 100,
-                _ => Index
+                RaidRegion.CrownTundra => (Index + 1) - 190,
+                RaidRegion.IsleOfArmor => (Index + 1) - 100,
+                _ => Index + 1
             };
 
             string regionName = Region switch
             {
-                RaidRegion.CrownTundra => "Crown Tundra",
-                RaidRegion.IsleOfArmor => "Isle of Armor",
-                _ => "Base Game"
+                RaidRegion.CrownTundra => "Crown",
+                RaidRegion.IsleOfArmor => "Isle",
+                _ => "Base"
             };
 
-            return $"{raidNumber}: - ({regionName}) {Location}";
+            return $"{raidNumber}: ({regionName}) {Location}";
         }
 
         public RaidParameters(int index, RaidSpawnDetail detail, int location, int x, int y, RaidRegion region)

@@ -102,7 +102,8 @@ namespace PKHeX_Raid_Plugin
             endFrame.Text = end_frame.ToString();
             ulong current_seed = Advance(start_seed, start_frame);
             var s = GameInfo.Strings;
-            RaidTemplate pkmn = (RaidTemplate)((ComboboxItem)speciesList.SelectedItem).Value;
+            if (speciesList.SelectedItem is not ComboboxItem { Value: RaidTemplate pkmn })
+                return;
             raidContent.Rows.Clear();
             var rows = new List<DataGridViewRow>();
             ((ISupportInitialize)raidContent).BeginInit();
@@ -146,56 +147,77 @@ namespace PKHeX_Raid_Plugin
                 return false;
             if (!natureBox.GetItemChecked(0) && !natureBox.GetItemChecked(res.Nature + 1))
                 return false;
-            if (abilityBox.SelectedIndex != 0 && (int)((ComboboxItem)abilityBox.SelectedItem).Value != res.Ability)
-                return false;
-            if (genderBox.SelectedIndex != 0 && (int)((ComboboxItem)genderBox.SelectedItem).Value != res.Gender)
-                return false;
+            if (abilityBox.SelectedIndex != 0)
+            {
+                var abilityItem = abilityBox.SelectedItem as ComboboxItem;
+                if (abilityItem?.Value is not int ability || ability != res.Ability)
+                    return false;
+            }
+
+            if (genderBox.SelectedIndex != 0)
+            {
+                var genderItem = genderBox.SelectedItem as ComboboxItem;
+                if (genderItem?.Value is not int gender || gender != res.Gender)
+                    return false;
+            }
 
             return (shinyBox.SelectedIndex == 1 && res.ShinyType > 0) || shinyBox.SelectedIndex - 2 == res.ShinyType || shinyBox.SelectedIndex == 0;
         }
 
         private bool GetIsRowVisible(DataGridViewRow row)
         {
-            int hp = int.Parse((string) row.Cells[1].Value);
-            if (hp < minHP.Value || hp > maxHP.Value)
+            if (!TryParseCell(row.Cells[1].Value, out int hp) || hp < minHP.Value || hp > maxHP.Value)
                 return false;
 
-            int atk = int.Parse((string)row.Cells[2].Value);
-            if (atk < minAtk.Value || atk > maxAtk.Value)
+            if (!TryParseCell(row.Cells[2].Value, out int atk) || atk < minAtk.Value || atk > maxAtk.Value)
                 return false;
 
-            int def = int.Parse((string)row.Cells[3].Value);
-            if (def < minDef.Value || def > maxDef.Value)
+            if (!TryParseCell(row.Cells[3].Value, out int def) || def < minDef.Value || def > maxDef.Value)
                 return false;
 
-            int spa = int.Parse((string)row.Cells[4].Value);
-            if (spa < minSpa.Value || spa > maxSpa.Value)
+            if (!TryParseCell(row.Cells[4].Value, out int spa) || spa < minSpa.Value || spa > maxSpa.Value)
                 return false;
 
-            int spd = int.Parse((string)row.Cells[5].Value);
-            if (spd < minSpd.Value || spd > maxSpd.Value)
+            if (!TryParseCell(row.Cells[5].Value, out int spd) || spd < minSpd.Value || spd > maxSpd.Value)
                 return false;
 
-            int spe = int.Parse((string)row.Cells[6].Value);
-            if (spe < MinSpe.Value || spe > maxSpe.Value)
+            if (!TryParseCell(row.Cells[6].Value, out int spe) || spe < MinSpe.Value || spe > maxSpe.Value)
                 return false;
 
-            if (!natureBox.GetItemChecked(0) && !natureBox.GetItemChecked(natureIdx[(string)row.Cells[7].Value]))
+            if (row.Cells[7].Value is not string nature)
                 return false;
 
-            if(abilityBox.SelectedIndex != 0 && !abilityBox.Text.StartsWith((string)row.Cells[8].Value))
+            if (!natureBox.GetItemChecked(0))
+            {
+                if (!natureIdx.TryGetValue(nature, out int idx))
+                    return false;
+
+                if (!natureBox.GetItemChecked(idx))
+                    return false;
+            }
+
+            if (row.Cells[8].Value is not string ability ||
+                (abilityBox.SelectedIndex != 0 && !abilityBox.Text.StartsWith(ability)))
                 return false;
 
-            if (genderBox.SelectedIndex != 0 && genderBox.Text != (string)row.Cells[9].Value)
+            if (row.Cells[9].Value is not string gender ||
+                (genderBox.SelectedIndex != 0 && genderBox.Text != gender))
                 return false;
 
-            string shiny = (string)row.Cells[10].Value;
-            return (shinyBox.SelectedIndex == 1 && shiny != "No") || shinyBox.Text == shiny || shinyBox.SelectedIndex == 0;
+            if (row.Cells[10].Value is not string shiny)
+                return false;
+
+            return shinyBox.SelectedIndex switch
+            {
+                1 => shiny != "No",
+                0 => true,
+                _ => shinyBox.Text == shiny
+            };
         }
 
         private void SpeciesList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var pkm = (RaidTemplate)((ComboboxItem)speciesList.SelectedItem).Value;
+            if (speciesList.SelectedItem is not ComboboxItem { Value: RaidTemplate pkm }) return;
             var abilities = PersonalTable.SWSH.GetFormEntry(pkm.Species, pkm.AltForm);
             PopulateAbilityList(abilities, pkm.Ability);
             PopulateGenderList(PersonalTable.SWSH[pkm.Species].Gender);
@@ -283,6 +305,7 @@ namespace PKHeX_Raid_Plugin
             try
             {
                 var row = await SearchTask(start_seed, start_frame, cts.Token);
+                if (row == null) return; 
                 //((ISupportInitialize)raidContent).BeginInit();
                 raidContent.Rows.Add(row);
                 searchButton.Text = "Search";
@@ -294,10 +317,10 @@ namespace PKHeX_Raid_Plugin
             }
         }
 
-        private async Task<DataGridViewRow> SearchTask(ulong start_seed, uint start_frame, CancellationToken cancelToken)
+        private async Task<DataGridViewRow?> SearchTask(ulong start_seed, uint start_frame, CancellationToken cancelToken)
         {
             ulong current_seed = Advance(start_seed, start_frame);
-            var template = (RaidTemplate)((ComboboxItem)speciesList.SelectedItem).Value;
+            if (speciesList.SelectedItem is not ComboboxItem { Value: RaidTemplate template }) return null;
             var s = GameInfo.Strings;
             return await Task.Run(() => {
                 for (uint current_frame = start_frame; ; current_frame++, current_seed += Xoroshiro128Plus.XOROSHIRO_CONST)
@@ -328,6 +351,12 @@ namespace PKHeX_Raid_Plugin
             row.Cells[10].Value = shinytype[res.ShinyType];
             row.Cells[11].Value = $"{current_seed:X16}";
             return row;
+        }
+
+        private static bool TryParseCell(object? value, out int result)
+        {
+            result = 0;
+            return value is string s && int.TryParse(s, out result);
         }
     }
 }

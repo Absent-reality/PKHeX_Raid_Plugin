@@ -7,23 +7,23 @@ namespace PKHeX_Raid_Plugin
         private static readonly string[] LocationNames =
         [
             //Base Galar:
-            "Axew's Eye",               //0
-            "Bridge Field",             //1
-            "Dappled Grove",            //2
-            "Dusty Bowl",               //3
-            "East Lake Axewell",        //4
-            "Giant's Cap",              //5
-            "Giant's Mirror",           //6
-            "Giant's Seat",             //7
-            "Hammerlocke Hills",        //8
-            "Lake of Outrage",          //9
-            "Motostoke Riverbank",      //10
-            "North Lake Miloch",        //11
-            "Rolling Fields",           //12
-            "South Lake Miloch",        //13
-            "Stony Wilderness",         //14
-            "Watchtower Ruins",         //15
-            "West Lake Axewell",        //16
+            "Axew's Eye",             
+            "Bridge Field",            
+            "Dappled Grove",           
+            "Dusty Bowl",               
+            "East Lake Axewell",        
+            "Giant's Cap",             
+            "Giant's Mirror",          
+            "Giant's Seat",             
+            "Hammerlocke Hills",        
+            "Lake of Outrage",          
+            "Motostoke Riverbank",      
+            "North Lake Miloch",        
+            "Rolling Fields",         
+            "South Lake Miloch",       
+            "Stony Wilderness",         
+            "Watchtower Ruins",         
+            "West Lake Axewell",        
 
             //Isle of Armor:
             "Fields of Honor",

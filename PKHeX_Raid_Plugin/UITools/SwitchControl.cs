@@ -217,7 +217,7 @@ namespace PKHeX_Raid_Plugin
             public bool IsLeft => State == SwitchState.Left;
         }
 
-        private void AnimateThumb(object sender, EventArgs e)
+        private void AnimateThumb(object? sender, EventArgs e)
         {
             float target = State == SwitchState.Right ? 1f : 0f;
 

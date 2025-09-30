@@ -40,7 +40,7 @@ namespace PKHeX_Raid_Plugin
         [DefaultValue(false)]
         public bool Connected
         {
-            get => _connected; 
+            get => _connected;
             set
             {
                 if (_connected != value)
@@ -101,6 +101,10 @@ namespace PKHeX_Raid_Plugin
             _originalHeight = this.Height;
             _announcer = new MessageAnnouncer();
 
+            groupBox1.Top += (172 - 36); 
+            groupBox1.Height = 36; 
+            btn_MinMax.Text = "▲";
+
             CB_Den.DrawMode = DrawMode.OwnerDrawFixed;
             CB_Den.DrawItem -= CB_Den_DrawItem;
             CB_Den.DrawItem += CB_Den_DrawItem;
@@ -119,8 +123,7 @@ namespace PKHeX_Raid_Plugin
         {
             lbl_memo.DataBindings.Add("Text", _announcer, "Message");
             btn_refresh.DataBindings.Add("Visible", this, "Connected");
-            progressBar.DataBindings.Add("Value", this, "ProgressValue", true, DataSourceUpdateMode.OnPropertyChanged);            
-            lbl_coordinates.DataBindings.Add("Text", this, "MouseCoordinatesText", true, DataSourceUpdateMode.OnPropertyChanged);
+            progressBar.DataBindings.Add("Value", this, "ProgressValue", true, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         public void UpdateRaids(SAV8SWSH sav)
@@ -132,7 +135,7 @@ namespace PKHeX_Raid_Plugin
             GetAllDens(list);
 
             if (CB_Den.SelectedItem is RaidParameters raid)
-            LoadDen(raid);
+                LoadDen(raid);
         }
 
         private void ChangeDenIndex(object sender, EventArgs e)
@@ -159,9 +162,9 @@ namespace PKHeX_Raid_Plugin
             CHK_Watts.Checked = raidParameters.WattsHarvested;
             L_DenSeed.Text = $"{raidParameters.Seed:X16}";
             L_Stars.Text = RaidUtil.GetStarString(raidParameters);
-           
+
             var pkm = _raids.GenerateFromIndex(raidParameters);
-            
+
             var s = GameInfo.Strings;
             L_Ability.Text = $"Ability: {s.Ability[pkm.Ability]}";
             L_Nature.Text = $"Nature: {s.natures[pkm.Nature]}";
@@ -178,7 +181,7 @@ namespace PKHeX_Raid_Plugin
             L_Location.Text = raidParameters.Location;
 
             if (raidParameters.X > 0 && raidParameters.Y > 0)
-                UpdateBackground(raidParameters); 
+                UpdateBackground(raidParameters);
         }
 
         private void GetAllDens(List<RaidParameters> currentRaids)
@@ -236,7 +239,7 @@ namespace PKHeX_Raid_Plugin
                     break;
 
                 case RaidRegion.IsleOfArmor:
-                    baseMap = Resources.map_ioa;                  
+                    baseMap = Resources.map_ioa;
                     raids = _aotRaids;
                     _currentRegions = GetMapRegions(RaidRegion.IsleOfArmor);
                     break;
@@ -358,8 +361,7 @@ namespace PKHeX_Raid_Plugin
                 if (_mousePoint != value)
                 {
                     _mousePoint = value;
-                    OnPropertyChanged(nameof(MousePoint));
-                    OnPropertyChanged(nameof(MouseCoordinatesText));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -380,10 +382,8 @@ namespace PKHeX_Raid_Plugin
             }
         }
 
-        public string MouseCoordinatesText => $"X: {_mousePoint.X}, Y: {_mousePoint.Y}";
-
         private void DenMap_Paint(object? sender, PaintEventArgs e)
-        {         
+        {
             if (_currentRegions == null || _currentRegions.Count == 0)
                 return;
 
@@ -411,8 +411,8 @@ namespace PKHeX_Raid_Plugin
             float locationX = HoverPoint.X + 10;
             float locationY = HoverPoint.Y + 10;
 
-            if (HoverPoint.X >= DenMap.ClientSize.Width - textSize.Width)            
-                   locationX = HoverPoint.X - textSize.Width;
+            if (HoverPoint.X >= DenMap.ClientSize.Width - textSize.Width)
+                locationX = HoverPoint.X - textSize.Width;
             if (HoverPoint.Y >= DenMap.ClientSize.Height - textSize.Height)
                 locationY = HoverPoint.Y - textSize.Height;
 
@@ -434,7 +434,7 @@ namespace PKHeX_Raid_Plugin
 
                 if (c.HasChildren)
                     SetEnabledRecursive(c, enabled);
-            }       
+            }
         }
 
         private void RaidList_Resize(object sender, EventArgs e)
@@ -661,6 +661,26 @@ namespace PKHeX_Raid_Plugin
                 control.Invoke(action);
             else
                 action();
+        }
+
+        bool isExpanded = false;
+        private void MinMax_Button_Click(object sender, EventArgs e)
+        {
+            int top = groupBox1.Top;
+            if (isExpanded)
+            {
+                groupBox1.Top += (172 - 36);
+                groupBox1.Height = 36; 
+                btn_MinMax.Text = "▲";
+            }
+            else
+            {
+                groupBox1.Top -= (172 - 36); 
+                groupBox1.Height = 172; 
+                btn_MinMax.Text = "▼";
+            }
+
+            isExpanded = !isExpanded;
         }
     }
 }

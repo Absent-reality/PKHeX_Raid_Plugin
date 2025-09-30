@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             GB_Left = new System.Windows.Forms.GroupBox();
-            lbl_coordinates = new System.Windows.Forms.Label();
             btn_refresh = new System.Windows.Forms.Button();
             progressBar = new System.Windows.Forms.ProgressBar();
-            groupBox1 = new System.Windows.Forms.GroupBox();
             lbl_memo = new System.Windows.Forms.Label();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            label7 = new System.Windows.Forms.Label();
+            btn_MinMax = new System.Windows.Forms.Button();
             tb_ip = new IPTextBox();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             protocolSwitch = new SwitchControl();
-            label4 = new System.Windows.Forms.Label();
             Cnct_btn = new System.Windows.Forms.Button();
             label3 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -85,9 +85,9 @@
             // 
             // GB_Left
             // 
-            GB_Left.Controls.Add(lbl_coordinates);
             GB_Left.Controls.Add(btn_refresh);
             GB_Left.Controls.Add(progressBar);
+            GB_Left.Controls.Add(lbl_memo);
             GB_Left.Controls.Add(groupBox1);
             GB_Left.Controls.Add(CHK_Watts);
             GB_Left.Controls.Add(CHK_Wishing);
@@ -127,21 +127,12 @@
             GB_Left.TabStop = false;
             GB_Left.Text = "Den List";
             // 
-            // lbl_coordinates
-            // 
-            lbl_coordinates.AutoSize = true;
-            lbl_coordinates.Location = new System.Drawing.Point(152, 102);
-            lbl_coordinates.Name = "lbl_coordinates";
-            lbl_coordinates.Size = new System.Drawing.Size(38, 15);
-            lbl_coordinates.TabIndex = 40;
-            lbl_coordinates.Text = "label7";
-            // 
             // btn_refresh
             // 
             btn_refresh.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_refresh.Location = new System.Drawing.Point(9, 466);
+            btn_refresh.Location = new System.Drawing.Point(10, 485);
             btn_refresh.Name = "btn_refresh";
-            btn_refresh.Size = new System.Drawing.Size(83, 23);
+            btn_refresh.Size = new System.Drawing.Size(83, 27);
             btn_refresh.TabIndex = 39;
             btn_refresh.Text = "Refresh List";
             btn_refresh.UseVisualStyleBackColor = true;
@@ -156,14 +147,25 @@
             progressBar.TabIndex = 38;
             progressBar.Visible = false;
             // 
+            // lbl_memo
+            // 
+            lbl_memo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            lbl_memo.AutoSize = true;
+            lbl_memo.Location = new System.Drawing.Point(150, 509);
+            lbl_memo.Name = "lbl_memo";
+            lbl_memo.Size = new System.Drawing.Size(0, 15);
+            lbl_memo.TabIndex = 38;
+            lbl_memo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(lbl_memo);
+            groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            groupBox1.Controls.Add(label7);
+            groupBox1.Controls.Add(btn_MinMax);
             groupBox1.Controls.Add(tb_ip);
             groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(protocolSwitch);
-            groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(Cnct_btn);
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
@@ -174,20 +176,33 @@
             groupBox1.TabIndex = 33;
             groupBox1.TabStop = false;
             // 
-            // lbl_memo
+            // label7
             // 
-            lbl_memo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            lbl_memo.AutoSize = true;
-            lbl_memo.Location = new System.Drawing.Point(45, 152);
-            lbl_memo.Name = "lbl_memo";
-            lbl_memo.Size = new System.Drawing.Size(0, 15);
-            lbl_memo.TabIndex = 38;
-            lbl_memo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label7.AutoSize = true;
+            label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
+            label7.Location = new System.Drawing.Point(29, 13);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(77, 15);
+            label7.TabIndex = 40;
+            label7.Text = "Connections:";
+            // 
+            // btn_MinMax
+            // 
+            btn_MinMax.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_MinMax.FlatAppearance.BorderSize = 0;
+            btn_MinMax.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btn_MinMax.Location = new System.Drawing.Point(124, 10);
+            btn_MinMax.Name = "btn_MinMax";
+            btn_MinMax.Size = new System.Drawing.Size(26, 21);
+            btn_MinMax.TabIndex = 39;
+            btn_MinMax.Text = "▲";
+            btn_MinMax.UseVisualStyleBackColor = true;
+            btn_MinMax.Click += MinMax_Button_Click;
             // 
             // tb_ip
             // 
             tb_ip.BackColor = System.Drawing.SystemColors.Window;
-            tb_ip.Location = new System.Drawing.Point(39, 37);
+            tb_ip.Location = new System.Drawing.Point(38, 51);
             tb_ip.MaxLength = 15;
             tb_ip.Name = "tb_ip";
             tb_ip.PlaceholderText = "192.168.1.10";
@@ -198,7 +213,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(94, 101);
+            label6.Location = new System.Drawing.Point(103, 113);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(27, 15);
             label6.TabIndex = 36;
@@ -207,7 +222,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(6, 101);
+            label5.Location = new System.Drawing.Point(29, 113);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(30, 15);
             label5.TabIndex = 35;
@@ -216,7 +231,7 @@
             // protocolSwitch
             // 
             protocolSwitch.AnimationEnabled = true;
-            protocolSwitch.Location = new System.Drawing.Point(47, 96);
+            protocolSwitch.Location = new System.Drawing.Point(65, 109);
             protocolSwitch.MinimumSize = new System.Drawing.Size(32, 18);
             protocolSwitch.Name = "protocolSwitch";
             protocolSwitch.Size = new System.Drawing.Size(32, 22);
@@ -224,19 +239,9 @@
             protocolSwitch.Text = "switchControl1";
             protocolSwitch.Toggled += Switch_Toggled;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Underline);
-            label4.Location = new System.Drawing.Point(47, 19);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(81, 15);
-            label4.TabIndex = 32;
-            label4.Text = "For CFW only:";
-            // 
             // Cnct_btn
             // 
-            Cnct_btn.Location = new System.Drawing.Point(38, 124);
+            Cnct_btn.Location = new System.Drawing.Point(38, 137);
             Cnct_btn.Name = "Cnct_btn";
             Cnct_btn.Size = new System.Drawing.Size(80, 25);
             Cnct_btn.TabIndex = 27;
@@ -247,7 +252,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(4, 68);
+            label3.Location = new System.Drawing.Point(4, 83);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(32, 15);
             label3.TabIndex = 31;
@@ -257,7 +262,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            label2.Location = new System.Drawing.Point(16, 40);
+            label2.Location = new System.Drawing.Point(16, 54);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(20, 15);
             label2.TabIndex = 30;
@@ -266,7 +271,7 @@
             // tb_port
             // 
             tb_port.Enabled = false;
-            tb_port.Location = new System.Drawing.Point(38, 65);
+            tb_port.Location = new System.Drawing.Point(38, 80);
             tb_port.MaxLength = 5;
             tb_port.Name = "tb_port";
             tb_port.Size = new System.Drawing.Size(46, 23);
@@ -678,7 +683,6 @@
         private System.Windows.Forms.TextBox tb_port;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -687,6 +691,7 @@
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button btn_refresh;
         private System.Windows.Forms.Label lbl_memo;
-        private System.Windows.Forms.Label lbl_coordinates;
+        private System.Windows.Forms.Button btn_MinMax;
+        private System.Windows.Forms.Label label7;
     }
 }

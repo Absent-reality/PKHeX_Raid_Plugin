@@ -134,5 +134,13 @@ namespace PKHeX_Raid_Plugin.Connections
               data = await SwitchConnection.ReadBytesAsync((uint)offset, length, token);              
             return data;
         }
+
+        public async Task WriteBlock(byte[] data, BlockDefinition blockDefinition, CancellationToken token)
+        {
+            var offset = blockDefinition.Offset;
+            if (offset < uint.MaxValue)
+            await SwitchConnection.WriteBytesAsync(data, (uint)offset, token);
+            return;
+        }
     }
 }

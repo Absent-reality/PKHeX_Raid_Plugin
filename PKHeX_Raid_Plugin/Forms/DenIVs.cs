@@ -12,19 +12,22 @@ namespace PKHeX_Raid_Plugin
     public partial class DenIVs : Form
     {
         private readonly RaidManager Raids;
-        private static readonly int[] min_stars = { 0, 0, 0, 0, 1, 1, 2, 2, 2, 0 };
-        private static readonly int[] max_stars = { 0, 1, 1, 2, 2, 2, 3, 3, 4, 4 };
+        private static readonly int[] min_stars = [0, 0, 0, 0, 1, 1, 2, 2, 2, 0];
+        private static readonly int[] max_stars = [0, 1, 1, 2, 2, 2, 3, 3, 4, 4];
 
         private static readonly ComboboxItem genderless = new("Genderless", 2);
-        private static readonly ComboboxItem female = new ("Female", 1);
-        private static readonly ComboboxItem male = new ("Male", 0);
-        private static readonly ComboboxItem any = new ("Any", -1);
+        private static readonly ComboboxItem female = new("Female", 1);
+        private static readonly ComboboxItem male = new("Male", 0);
+        private static readonly ComboboxItem any = new("Any", -1);
 
         private static readonly string[] genders = { "Male", "Female", "Genderless" };
         private static readonly string[] shinytype = { "No", "Star", "Square" };
         private static readonly Dictionary<string, int> natureIdx = [];
 
         private CancellationTokenSource cts = new();
+        private ContextMenuStrip seedCellMenu;
+        public string SelectedSeed { get; private set; }
+        public int SelectedDenIndex { get; private set; }
 
         public DenIVs(int idx, RaidManager raids)
         {
@@ -52,6 +55,13 @@ namespace PKHeX_Raid_Plugin
             CenterToParent();
         }
 
+        private void DenIVs_Load(object sender, EventArgs e)
+        {
+            seedCellMenu = new ContextMenuStrip();
+            seedCellMenu.Items.Add("Copy To Clipboard", null, CopyValueToClipboard_Click);
+            seedCellMenu.Items.Add("Set to current seed", null, SetSeedValue);
+        }
+
         private static ulong Advance(ulong start, uint frames)
         {
             return start + (frames * Xoroshiro128Plus.XOROSHIRO_CONST);
@@ -59,6 +69,7 @@ namespace PKHeX_Raid_Plugin
 
         private void DenBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            SelectedDenIndex = denBox.SelectedIndex;
             RaidParameters raidParameters = Raids[denBox.SelectedIndex];
             seedBox.Text = raidParameters.Seed.ToString("X");
             speciesList.Items.Clear();
@@ -68,7 +79,7 @@ namespace PKHeX_Raid_Plugin
                 var entries = Raids.GetAllTemplatesWithStarCount(raidParameters, 0);
                 foreach (var entry in entries)
                 {
-                    ComboboxItem item = new ($"{entry.MinRank + 1}\u2605 {s.Species[entry.Species]}", entry);
+                    ComboboxItem item = new($"{entry.MinRank + 1}\u2605 {s.Species[entry.Species]}", entry);
                     speciesList.Items.Add(item);
                 }
             }
@@ -79,7 +90,7 @@ namespace PKHeX_Raid_Plugin
                     var entries = Raids.GetAllTemplatesWithStarCount(raidParameters, stars);
                     foreach (var entry in entries)
                     {
-                        ComboboxItem item = new ($"{stars + 1}\u2605 {s.Species[entry.Species]}", entry);
+                        ComboboxItem item = new($"{stars + 1}\u2605 {s.Species[entry.Species]}", entry);
                         speciesList.Items.Add(item);
                     }
                 }
@@ -90,7 +101,7 @@ namespace PKHeX_Raid_Plugin
         private void GenerateData_Click(object sender, EventArgs e)
         {
             ulong start_seed = ulong.Parse(seedBox.Text, System.Globalization.NumberStyles.HexNumber);
-            if(!uint.TryParse(startFrame.Text, out uint start_frame))
+            if (!uint.TryParse(startFrame.Text, out uint start_frame))
             {
                 start_frame = uint.MaxValue;
             }
@@ -293,7 +304,7 @@ namespace PKHeX_Raid_Plugin
                 return;
 
             ulong start_seed = ulong.Parse(seedBox.Text, System.Globalization.NumberStyles.HexNumber);
-            if(!uint.TryParse(startFrame.Text, out uint start_frame))
+            if (!uint.TryParse(startFrame.Text, out uint start_frame))
             {
                 start_frame = uint.MaxValue;
             }
@@ -305,7 +316,7 @@ namespace PKHeX_Raid_Plugin
             try
             {
                 var row = await SearchTask(start_seed, start_frame, cts.Token);
-                if (row == null) return; 
+                if (row == null) return;
                 //((ISupportInitialize)raidContent).BeginInit();
                 raidContent.Rows.Add(row);
                 searchButton.Text = "Search";
@@ -322,7 +333,8 @@ namespace PKHeX_Raid_Plugin
             ulong current_seed = Advance(start_seed, start_frame);
             if (speciesList.SelectedItem is not ComboboxItem { Value: RaidTemplate template }) return null;
             var s = GameInfo.Strings;
-            return await Task.Run(() => {
+            return await Task.Run(() =>
+            {
                 for (uint current_frame = start_frame; ; current_frame++, current_seed += Xoroshiro128Plus.XOROSHIRO_CONST)
                 {
                     cancelToken.ThrowIfCancellationRequested();
@@ -357,6 +369,42 @@ namespace PKHeX_Raid_Plugin
         {
             result = 0;
             return value is string s && int.TryParse(s, out result);
+        }
+
+        private void RaidContent_SeedCellClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            if (e.Button != MouseButtons.Right) return;
+            raidContent.CurrentCell = raidContent.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            if (raidContent.Columns[e.ColumnIndex].Name != "SeedCell") return;
+            var cell = raidContent.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            if (cell.Value != null && !string.IsNullOrWhiteSpace(cell.Value.ToString()))
+            {
+                raidContent.CurrentCell = cell;
+                seedCellMenu.Show(Cursor.Position);
+            }
+        }
+
+        private void CopyValueToClipboard_Click(object? sender, EventArgs e)
+        {
+            if (raidContent.CurrentCell?.Value != null)
+            {
+                var text = raidContent.CurrentCell.Value.ToString();               
+                Clipboard.SetText(text!);
+            }
+        }
+
+        private void SetSeedValue (object? sender, EventArgs e)
+        {
+            if (raidContent.CurrentCell != null && raidContent.CurrentCell?.Value != null)
+            {
+                var text = raidContent.CurrentCell.Value.ToString();
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    SelectedSeed = text;
+                    DialogResult = DialogResult.OK;
+                }
+            }
         }
     }
 }

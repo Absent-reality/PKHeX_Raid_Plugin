@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
 using static PKHeX_Raid_Plugin.MapRegions;
 using static PKHeX_Raid_Plugin.RaidRegions;
@@ -144,13 +145,46 @@ namespace PKHeX_Raid_Plugin
                 LoadDen(raid);
         }
 
-        private void ShowDenIVs(object sender, EventArgs e)
+        private async void ShowDenIVs(object sender, EventArgs e)
         {
-            if (CB_Den.SelectedItem is RaidParameters raid)
+            if (CB_Den.SelectedItem is not RaidParameters raid) return;
+
+            using var divs = new DenIVs(raid.Index, _raids);
+            if (divs.ShowDialog() == DialogResult.OK)
             {
-                using var divs = new DenIVs(raid.Index, _raids);
-                divs.ShowDialog();
+                CB_Den.SelectedIndex = divs.SelectedDenIndex;
+                if (CB_Den.SelectedItem is not RaidParameters selectedRaid) return;
+                if (!Connected) return;
+                var result = MessageBox.Show(
+                    "Write seed to block?",
+                    "Warning!",
+                    MessageBoxButtons.YesNo
+                    );
+                if (result == DialogResult.Yes)
+                {
+                    using var cts = new CancellationTokenSource();
+                    var token = cts.Token;
+                    var seed = ulong.Parse(divs.SelectedSeed, NumberStyles.HexNumber);                    
+                    var val = selectedRaid.Region switch
+                    {
+                        RaidRegion.Base => (_SAV.RaidGalar, BlockDefinitions.Raid),
+                        RaidRegion.CrownTundra => (_SAV.RaidCrown, BlockDefinitions.RaidCrown),
+                        RaidRegion.IsleOfArmor => (_SAV.RaidArmor, BlockDefinitions.RaidArmor),
+                        _ => (null, BlockDefinitions.Raid)
+                    };
+                    var spawnList = val.Item1;
+                    var def = val.Item2;
+                    if (spawnList == null) return;
+                    var den = spawnList.GetRaid(selectedRaid.Index);
+                    den.Seed = seed;
+                    var block = _SAV.Accessor.GetBlock(def.Key);
+                    byte[] bytes = block.Data.ToArray();
+                    await Executor.WriteBlock(bytes, def, token);
+                    await RefreshRaids(token);
+                }
             }
+            else
+                CB_Den.SelectedIndex = divs.SelectedDenIndex;
         }
 
         private void LoadDen(RaidParameters raidParameters)

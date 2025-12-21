@@ -19,7 +19,7 @@ Open PKHeX, load a savegame, and go to Tool -> Display Raids. You will see the c
 Hover mouse over an area to display the area's name. 
 
 ## For CFW users
-Start with no save loaded in PKHex. Open the raid plugin and click the up arrow to bring up the connection settings. With the game running, input your information and click connect. Once connected the raid list will update to match the games current raids. 
+Start with no save loaded in PKHex. Open the raid plugin and click the up arrow to bring up the connection settings. With the game running, input your information and click connect. Once connected the raid list will update to match the game's current raids. 
 Dens that have a wishing piece will show as highlighted purple in the list and with an icon on the map. If a den is "Shiny" it will be highlighted in yellow and have a shiny icon. 
 Note: An inactive den that is shiny will change when a wishing stone is tossed in as the seed is re-rolled.
 Select the desired den, make note of the "next shiny frame", then click ``Raid Calculator`` to see the details. Enter the desired frame range and click "show" to display raid information for that range. Right click on the desired seed to copy seed value. 
